@@ -1,57 +1,49 @@
-import React, { Component } from 'react'
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import React, { Component } from 'react';
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import firebase from './config/fireConnection';
 
+//PAGES
 import Cadastrar from './pages/auth/Cadastrar';
 import Logar from './pages/auth/Logar';
 import Home from './pages/home';
-import {firebaseAuth} from './config/fireConnection';
 
 
-function PrivateRoute ({component: Component, authed, ...rest}) {
-  return (
-    <Route
-      {...rest}
-      render={(props) => authed === true
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
-    />
-  )
-}
+class Routes extends Component{
 
-
-export default class Routes extends Component {
   state = {
-    authed: false,
-    loading: true,
-  }
-  componentDidMount () {
-    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          authed: true,
-          loading: false,
-        })
-      } else {
-        this.setState({
-          authed: false,
-          loading: false
-        })
-      }
+    firebaseInitialized: false
+  };
+
+  componentDidMount(){
+    firebase.isInitialized().then(resultado => {
+      if(resultado == null) resultado = false;
+      
+      // Devolve o usuario
+      this.setState({firebaseInitialized: resultado});
+      //Linha adicionada
+      console.log(resultado);
+      
     })
   }
-  componentWillUnmount () {
-    this.removeListener()
-  }
 
-  render() {
-    return this.state.loading === true ? <h1>Loading</h1> : (
-      <Router>
+  render(){
+    return this.state.firebaseInitialized !== false ? (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/app" component={() => <h1>Logado!</h1>} />
+        </Switch>
+      </BrowserRouter>
+    ) : (
+      <BrowserRouter>
         <Switch>
           <Route exact path="/cadastro" component={Cadastrar} />
-          <Route exact path="/login" component={Logar} />
-          <PrivateRoute exact authed={this.state.authed} path="/" component={Home} />
+          <Route exact path="/" component={Logar} />
         </Switch>
-    </Router>
+      </BrowserRouter>
+      
     );
   }
 }
+
+export default Routes;
