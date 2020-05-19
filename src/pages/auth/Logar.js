@@ -33,8 +33,6 @@ class Logar extends Component{
   login = async () => {
     const {email, password} = this.state;
 
-    try{
-
       await firebase.login(email, password)
       .catch((error)=>{
         if(error.code === 'auth/user-not-found'){
@@ -44,29 +42,26 @@ class Logar extends Component{
           return null;
         }
       });
-      this.props.history.replace('/');
 
-    }catch(error){
-      alert(error.message);
-    }
-
+    document.location.assign('/');
   }
 
   render(){
     return(
       <div>
+        <h2>Login do usuário</h2>
         <form onSubmit={this.entrar} id="login">
           <label>Email:</label><br/>
           <input type="email" autoComplete="off" autoFocus value={this.state.email}
-          onChange={(e) => this.setState({email: e.target.value})} placeholder="teste@teste.com"
-          /><br/>
+          onChange={(e) => this.setState({email: e.target.value})} placeholder="Insira seu email"/>
+          <br/>
           <label>Password:</label><br/>
           <input type="password" autoComplete="off" value={this.state.password}
-          onChange={(e) => this.setState({password: e.target.value})} placeholder="Sua senha"
+          onChange={(e) => this.setState({password: e.target.value})} placeholder="Insira sua senha"
           /><br/>
 
           <button type="submit">Entrar</button>
-
+          <br/>
           <Link to="/cadastro">Ainda não possui uma conta?</Link>
         </form>
       </div>

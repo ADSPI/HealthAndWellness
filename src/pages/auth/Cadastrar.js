@@ -15,58 +15,44 @@ export default class Cadastrar extends Component{
   }
 
   insereUser = async (e) => {
-    let cadastrado = false;
     firebase.cadastrar(this.state.email, this.state.senha)
     .then(retorno => {
-      alert("Usuário criado com sucesso!");
+      alert("Parabéns, você foi cadastrado com sucesso!");
+      document.location.assign('/');
     })
     .catch((error) => {
       
         if(error.code === "auth/invalid-email"){
-          alert('Email invalido');
+          alert('Email em formato inválido.');
         } else {
           if(error.code === "auth/weak-password"){
-          alert("senha fraca");
+          alert("Senha fraca, tamanho mínimo de 6 caracteres.");
           } else {
-            alert("Código de erro:" + error.code)
+            alert("Código de erro: " + error.code)
           }
         }
     })
+    this.setState({email: ''});
+    this.setState({senha: ''});
     e.preventDefault();
   };
-
-  
-    /*cadastrar(e){
-      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.senha)
-      .catch((error) => {
-        if(error.code === "auth/invalid-email"){
-          alert('Email invalido');
-        }
-        if(error.code === "auth/weak-password"){
-          alert("senha fraca");
-        } else {
-          alert("Código de erro:" + error.code)
-        }
-      })
-        e.preventDefault();
-    }*/
   
   render(){
     return(
       <div>
+        <h2>Cadastro de usuário</h2>
         <form onSubmit={this.insereUser}>
-            <h1>Cadastro de usuário</h1>
-            <label>Email:</label>
-            <br/>
-            <input type="text" value={this.state.email}
-            onChange={(e) => this.setState({email: e.target.value})} />
-           <br/>
-           <label>Senha:</label>
-           <br/>
-           <input type="text" value={this.state.senha}
-           onChange={(e) => this.setState({senha: e.target.value})} />
-           <br/>
-           <button type="submit">Cadastrar</button>
+          <label>Email:</label>
+          <br/>
+          <input type="text" value={this.state.email}
+            onChange={(e) => this.setState({email: e.target.value})} placeholder="Seu email"/>
+          <br/>
+          <label>Senha:</label>
+          <br/>
+          <input type="password" autoComplete="off" value={this.state.senha}
+           onChange={(e) => this.setState({senha: e.target.value})} placeholder="Sua senha"/>
+          <br/>
+          <button type="submit">Cadastrar</button>
         </form>
       </div>
     )

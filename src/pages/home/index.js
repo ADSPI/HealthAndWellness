@@ -32,8 +32,8 @@ export default class Home extends Component{
       console.log(error);
     });
     localStorage.removeItem("nome");
-    this.props.history.push('/');
-
+    
+    document.location.assign('/');
   }
 
   render(){

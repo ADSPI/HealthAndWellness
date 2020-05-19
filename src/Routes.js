@@ -6,6 +6,7 @@ import firebase from './config/fireConnection';
 import Cadastrar from './pages/auth/Cadastrar';
 import Logar from './pages/auth/Logar';
 import Home from './pages/home';
+import ErrorUrl from './pages/error';
 
 
 class Routes extends Component{
@@ -32,6 +33,7 @@ class Routes extends Component{
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/app" component={() => <h1>Logado!</h1>} />
+          <Route path="*" component={ErrorUrl}/>
         </Switch>
       </BrowserRouter>
     ) : (
@@ -39,6 +41,7 @@ class Routes extends Component{
         <Switch>
           <Route exact path="/cadastro" component={Cadastrar} />
           <Route exact path="/" component={Logar} />
+          <Route path="*" component={ErrorUrl}/>
         </Switch>
       </BrowserRouter>
       
