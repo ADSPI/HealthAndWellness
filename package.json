@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "firebase": "^7.10.0",
+    "primeicons": "^3.0.0-rc.1",
+    "primereact": "^4.2.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",

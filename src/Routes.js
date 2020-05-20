@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import firebase from './config/fireConnection';
+//FRAGMENT
+import MenuBar from './fragment/menuBar';
 
 //PAGES
 import Cadastrar from './pages/auth/Cadastrar';
 import Logar from './pages/auth/Logar';
 import Home from './pages/home';
 import ErrorUrl from './pages/error';
-
+import Header from './pages/header';
 
 class Routes extends Component{
 
@@ -30,6 +32,8 @@ class Routes extends Component{
   render(){
     return this.state.firebaseInitialized !== false ? (
       <BrowserRouter>
+        <Header/>
+        <MenuBar/>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/app" component={() => <h1>Logado!</h1>} />

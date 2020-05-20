@@ -4,23 +4,25 @@ import {Link} from 'react-router-dom';
 import './header.css';
 import firebase from './../../config/fireConnection';
 
-
 export default class Header extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-      email: '',
-      senha: ''
+      nome: localStorage.nome
     };
-    this.sair = this.sair.bind(this);
-
+    this.logout = this.logout.bind(this);
   }
 
-  sair(){
-    firebase.auth().signOut();
-    alert('Deslogado com sucesso!');
-  }
+  logout = async () => {
+   await firebase.logout()
+   .catch((error)=>{
+     console.log(error);
+   });
+   localStorage.removeItem("nome");
+   
+   document.location.assign('/');
+ }
 
   render(){
     
@@ -30,7 +32,7 @@ export default class Header extends Component{
         <Link to="/">
           Health and Wellness
         </Link>
-          <Button inverted onClick={this.sair}>Sair</Button>       
+          <Button inverted onClick={()=> this.logout()}>Sair</Button>       
       </div>
     </header>
   );
