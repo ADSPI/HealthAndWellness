@@ -10,6 +10,12 @@ import Logar from './pages/auth/Logar';
 import Home from './pages/home';
 import ErrorUrl from './pages/error';
 import Header from './pages/header';
+import novaConsulta from './pages/consulta/novaConsulta';
+import historicoConsulta from './pages/consulta/historicoConsulta';
+import historicoExame from './pages/exame/historicoExame';
+import novoExame from './pages/exame/novoExame';
+import perfil from './pages/perfil';
+import Imc from './pages/imc';
 
 class Routes extends Component{
 
@@ -32,11 +38,16 @@ class Routes extends Component{
   render(){
     return this.state.firebaseInitialized !== false ? (
       <BrowserRouter>
-        <Header/>
         <MenuBar/>
+        <Header/>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/app" component={() => <h1>Logado!</h1>} />
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/novaConsulta" component={novaConsulta}/>
+          <Route exact path="/historicoConsulta" component={historicoConsulta}/>
+          <Route exact path="/historicoExame" component={historicoExame}/>
+          <Route exact path="/novoExame" component={novoExame}/>
+          <Route exact path="/imc" component={Imc}/>
+          <Route exact path="/perfil" component={perfil}/>
           <Route path="*" component={ErrorUrl}/>
         </Switch>
       </BrowserRouter>

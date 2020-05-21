@@ -1,64 +1,78 @@
 import React, {Component} from 'react';
 import {Menubar} from 'primereact/menubar';
+import { useHistory } from "react-router-dom";
 
-export default class MenuBar extends Component {
+export default function MenuBar() {
+  const history = useHistory();
 
-    constructor() {
-        super();
-        
-        this.state = {
-            items:[
-                {
-                    label:'Início',
-                    icon:'pi pi-home'                   
-                },
-                {
-                    label:'Consulta',
-                    icon:'pi pi-file-o',
-                    items:[
-                       {
-                          label:'Nova consulta',
-                          icon:'pi pi-fw pi-align-left'
-                       },
-                       {
-                          label:'Histórico',
-                          icon:'pi pi-fw pi-align-right'
-                       }
-                    ]
-                },
-                {
-                   label:'Exame',
-                   icon:'pi pi-save',
-                   items:[
-                      {
-                         label:'Novo exame',
-                         icon:'pi pi-fw pi-align-left'
-                      },
-                      {
-                         label:'Histórico',
-                         icon:'pi pi-fw pi-align-right'
-                      }
-                   ]
-                },
-                {
-                   label:'Perfil',
-                   icon:'pi pi-fw pi-user'
-                },
-                {
-                   label:'Blog',
-                   icon:'pi pi-fw pi-calendar'                   
-                },
-             ]
-        };
-    }
+   const handleOnClick = (e) => {
+      history.push(e.item.path);
+   };
 
-    render() {
-        return (
-            <div>
-                <div className="content-section implementation">
-                    <Menubar model={this.state.items} />
-                </div>
-            </div>
-        );
-    }
+  let item = [
+    {
+        label:'Início',
+        icon:'pi pi-home',
+        path:"/",
+        command:(e)=> handleOnClick(e)
+    },
+    {
+        label:'Consulta',
+        icon:'pi pi-file-o',
+        items:[
+           {
+              label:'Nova consulta',
+              icon:'pi pi-fw pi-cloud-upload',
+              path:"/novaConsulta",
+              command:(e)=> handleOnClick(e)
+           },
+           {
+              label:'Histórico',
+              icon:'pi pi-fw pi-list',
+              path:"/historicoConsulta",
+              command:(e)=> handleOnClick(e)
+           }
+        ]
+    },
+    {
+       label:'Exame',
+       icon:'pi pi-save',
+       items:[
+          {
+             label:'Novo exame',
+             icon:'pi pi-fw pi-cloud-upload',
+             path:"/novoExame",
+             command:(e)=> handleOnClick(e)
+          },
+          {
+             label:'Histórico',
+             icon:'pi pi-fw pi-list',
+             path:"/historicoExame",
+             command:(e)=> handleOnClick(e)
+          }
+       ]
+    },
+    {
+      label:'IMC',
+      icon:'pi pi-fw pi-heart',
+      path:"/imc",
+      command:(e)=> handleOnClick(e)
+   },
+    {
+      label:'Perfil',
+      icon:'pi pi-fw pi-user',
+      path:"/perfil",
+      command:(e)=> handleOnClick(e)
+   },
+ ]
+
+  return (
+    <div>
+        <div className="content-section implementation">
+            <Menubar model={item}>
+            </Menubar>
+        </div>
+    </div>
+  );
 }
+

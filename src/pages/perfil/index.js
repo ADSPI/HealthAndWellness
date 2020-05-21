@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Home() {
+export default function Perfil() {
   
   useEffect(() => {
     console.log("Iniciando");
@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div>
-      Seja bem-vindo ao Health and Wellness, não repare a bagunça, ainda estamos em estágio embrionário!
+      Perfil usuário
     </div>
   );
 }
