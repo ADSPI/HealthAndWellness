@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import firebase from './../../config/fireConnection';
 import {Link, withRouter} from 'react-router-dom';
+import {InputText} from 'primereact/inputtext';
+import {Button} from 'primereact/button';
+
+import './Logar.css';
 
 class Logar extends Component{
 
@@ -38,15 +42,37 @@ class Logar extends Component{
         if(error.code === 'auth/user-not-found'){
           alert('Este usuario não existe!');
         }else{
+          if(error.code === 'auth/wrong-password'){
+            alert('Ops, senha incorreta, tente novamente.');
+          } else {
           alert('Codigo de erro:' + error.code);
           return null;
         }
+      }
       });
 
     document.location.assign('/');
   }
 
   render(){
+    return(
+      <div>
+        <form onSubmit={this.entrar} id="login">
+            <label>Email:</label>
+              <InputText type="email" autoComplete="off" value={this.state.email} 
+              onChange={(e) => this.setState({email: e.target.value})} placeholder="Insira seu email"/>
+            <label>Senha:</label>
+              <InputText type="password" autoComplete="off" value={this.state.password}
+              onChange={(e) => this.setState({password: e.target.value})} placeholder="Insira sua senha" />
+            <Button label="Entrar" type="submit" className="p-button-raised" />
+        </form>
+      </div>
+    );
+  }
+}
+
+
+  /*render(){
     return(
       <div>
         <h2>Login do usuário</h2>
@@ -67,6 +93,6 @@ class Logar extends Component{
       </div>
     );
   }
-}
+}*/
 
 export default withRouter(Logar);

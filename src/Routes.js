@@ -3,13 +3,14 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import firebase from './config/fireConnection';
 //FRAGMENT
 import MenuBar from './fragment/menuBar';
+import Header from './pages/header';
+import HeaderSemLogar from './fragment/header/HeaderSemLogar';
 
 //PAGES
 import Cadastrar from './pages/auth/Cadastrar';
 import Logar from './pages/auth/Logar';
 import Home from './pages/home';
 import ErrorUrl from './pages/error';
-import Header from './pages/header';
 import novaConsulta from './pages/consulta/novaConsulta';
 import historicoConsulta from './pages/consulta/historicoConsulta';
 import historicoExame from './pages/exame/historicoExame';
@@ -53,6 +54,7 @@ class Routes extends Component{
       </BrowserRouter>
     ) : (
       <BrowserRouter>
+        <HeaderSemLogar/>
         <Switch>
           <Route exact path="/cadastro" component={Cadastrar} />
           <Route exact path="/" component={Logar} />
