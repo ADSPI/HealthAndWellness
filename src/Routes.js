@@ -5,6 +5,8 @@ import firebase from './config/fireConnection';
 import MenuBar from './fragment/menuBar';
 import Header from './pages/header';
 import HeaderSemLogar from './fragment/header/HeaderSemLogar';
+import Footer from './fragment/footer';
+
 
 //PAGES
 import Cadastrar from './pages/auth/Cadastrar';
@@ -51,6 +53,7 @@ class Routes extends Component{
           <Route exact path="/perfil" component={perfil}/>
           <Route path="*" component={ErrorUrl}/>
         </Switch>
+        <Footer/>
       </BrowserRouter>
     ) : (
       <BrowserRouter>
@@ -60,6 +63,7 @@ class Routes extends Component{
           <Route exact path="/" component={Logar} />
           <Route path="*" component={ErrorUrl}/>
         </Switch>
+        <Footer/>
       </BrowserRouter>
       
     );

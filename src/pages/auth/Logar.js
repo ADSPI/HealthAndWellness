@@ -9,8 +9,11 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import logo from './../../img/logo.png';
+import {Helmet} from "react-helmet";
 
 import './Logar.css';
+import './../../css/css_general.css';
+
 
 class Logar extends Component{
 
@@ -62,8 +65,10 @@ class Logar extends Component{
 
   render(){
     return(
-      <div>
+        <div class="container-bg">
         <Container>
+          <div  >
+
           <section>
           <br/><vr/>
           <Row className="justify-content-md-center">
@@ -111,6 +116,7 @@ class Logar extends Component{
             <Col lg={8} md={12}>
               <center>
                 <h2>Nosso propósito</h2>
+                <br/>
               </center>
               <p>O <b>Health and Wellness</b> é um sistema de controle de prontuário pessoal,
                 no qual busca dar a oportunidade de carregar consigo mesmo todo seu histórico 
@@ -127,6 +133,7 @@ class Logar extends Component{
           </Row>
           </section>
           <br/><br/><br/>
+          </div>
           </Container>        
       </div>
     );
