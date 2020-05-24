@@ -1,32 +1,60 @@
-import React, {Component} from 'react';
-import firebase from './../../config/fireConnection';
+import React, { useState } from 'react';
+import useForm from "react-hook-form";
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import {InputText} from 'primereact/inputtext';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
 import {Password} from 'primereact/password';
+import Loading from '../loading';
+import firebase from './../../config/fireConnection';
+import Validador from './../../services/util/validador';
 
 import './../../css/css_general.css';
 
-export default class Cadastrar extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      nome: '',
-      dataNascimento: '',
-      telefone: '',
-      email: '',
-      senha: '',
-    };
+export default function Cadastrar (){
+  
+  const { register, handleSubmit, errors } = useForm();
+  const [ loading, setLoading ] = useState(false);
+  const [dataNascimento, setDataNascimento] = useState(null);
+  const [senha, setSenha] = useState();
+  const [senhaConfirma, setSenhaConfirma] = useState();
 
-    this.insereUser = this.insereUser.bind(this);
+  const [confirmaSenha, setConfirmaSenha] = useState(true);
 
+  const setPassword = (e) => {
+    if(e.target.name === "senha" ) {
+      setSenha(e.target.value);
+      if(e.target.value.length >= 6 && e.target.value === senhaConfirma){
+        setConfirmaSenha(false);
+      } else {
+        setConfirmaSenha(true);
+      }
+    } else {
+      if(e.target.name === "senhaConfirma"){
+        setSenhaConfirma(e.target.value);
+        if(e.target.value.length >= 6 && e.target.value === senha){
+          setConfirmaSenha(false);
+        } else {
+          setConfirmaSenha(true);
+        }
+      }
+    }
+  };
+
+  const convertDate = (str) => {
+    var date = new Date(str),
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+    day = ("0" + date.getDate()).slice(-2);
+    setDataNascimento([day, mnth, date.getFullYear()].join("/"));
   }
 
-  insereUser = async (e) => {
-    firebase.cadastrar(this.state.email, this.state.senha)
+  const onSubmit = data => {
+    setLoading(true);
+    data.dataNascimento = dataNascimento;
+    console.log(data);
+    firebase.cadastrar(data.email, senha)
     .then(retorno => {
       alert("Parabéns, você foi cadastrado com sucesso!");
       document.location.assign('/');
@@ -39,71 +67,79 @@ export default class Cadastrar extends Component{
           if(error.code === "auth/weak-password"){
           alert("Senha fraca, tamanho mínimo de 6 caracteres.");
           } else {
-            alert("Código de erro: " + error.code)
+            alert("Ops, algum erro em seu cadastro: " + error.code)
           }
         }
     })
-    this.setState({email: ''});
-    this.setState({senha: ''});
-    e.preventDefault();
-  };
-  
-  render(){
-    return(
-      <div className="telaFull">
-      <div>
+  }
+  return (
+    
+    <div>
         <Container>
+          {loading ?
+          <Loading/> :
+          <div>
           <br/>
+          <center><h2>Criar uma nova conta</h2></center><br/><br/>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <Row className="justify-content-md-center">
-            <center><h2>Criar uma nova conta</h2></center><br/><br/>
+            <Col lg={4} md={10}>
+              <br/>
+              <Form.Label className="required">Nome</Form.Label>
+              <Form.Control type="text" name="nome" maxLength="50" ref={register({required:true, maxLength: 50})}
+               placeholder="Insira aqui seu nome"/>
+              {errors.nome && errors.nome.type === "required" && <span className="alertField">Campo nome é requerido.</span>}
+              {errors.nome && errors.nome.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres.</span> }
+            </Col>
+            <Col lg={4} md={10}>
+              <br/>
+              <Form.Label>Telefone</Form.Label><br/>
+              <Form.Control type="text" name="telefone" maxLength="11" ref={register({maxLength: 11})}
+               placeholder="Insira aqui seu telefone" onKeyUp={(e) => Validador.formatNumber(e)}/>
+              {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números.</span> }
+            </Col>
+            <Col lg={4} md={10}>
+              <br/>
+              <Form.Label>Data nascimento</Form.Label><br/>
+              <Calendar onChange={(e) => convertDate(e.target.value)}
+              monthNavigator={true} yearNavigator={true} yearRange="1950:2020" placeholder="dd/mm/aaaa"/>
+            </Col>
           </Row>
-          <form onSubmit={this.insereUser}>
-          <Row className="justify-content-xs-center">
-              
-              <Col lg={4} md={12}>
-                <br/>
-                <label>Nome</label> <br/>
-                <InputText type="text" size="45" autoComplete="off" value={this.state.nome} 
-                onChange={(e) => this.setState({nome: e.target.value})} placeholder="Insira aqui seu nome"/>
-                <br/><br/>
-                <label>Data nascimento</label><br/>
-                <Calendar value={this.state.dataNascimento} onChange={(e) => this.setState({dataNascimento: e.value})}
-                monthNavigator={true} yearNavigator={true} yearRange="2010:2030" placeholder="Data de nascimento"/>   
-              </Col>
-              <Col lg={4} md={12}>
-                <br/>
-                <label>Telefone</label> <br/>
-                <InputText type="text" size="45" autoComplete="off" value={this.state.telefone} 
-                onChange={(e) => this.setState({telefone: e.target.telefone})} placeholder="Insira aqui seu telefone"/>
-                <br/><br/>
-                <label>Email</label> <br/>
-                <InputText type="email" size="45" autoComplete="off" value={this.state.email} 
-                onChange={(e) => this.setState({email: e.target.value})} placeholder="Insira aqui seu email"/>
-              </Col>
-              <Col>
-                <br/>
-                <label>Senha</label> <br/>
-                <Password value={this.state.password} size="45" autoComplete="off" promptLabel="Insira sua senha" weakLabel="Senha fraca" mediumLabel="Senha média" strongLabel="Senha forte"
-                onChange={(e) => this.setState({password: e.target.value})} placeholder="Insira aqui sua senha" />
-                <br/><br/>
-                <label>Confirmação de senha</label> <br/>
-                <Password value={this.state.password} size="45" autoComplete="off" promptLabel="Confirme sua senha" weakLabel="Senha fraca" mediumLabel="Senha média" strongLabel="Senha forte"
-                onChange={(e) => this.setState({password: e.target.value})} placeholder="Insira aqui sua senha" />
-              </Col>              
+          <Row className="justify-content-md-center">
+            <Col lg={4} md={10}>
+              <br/>
+              <Form.Label className="required">Email</Form.Label>
+              <Form.Control type="email" name="email" maxLength="50" ref={register({required:true, maxLength: 50})}
+               placeholder="Insira aqui seu email"/>
+              {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é requerido.</span>}
+              {errors.email && errors.email.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
+            </Col>
+            <Col lg={4} md={10}>
+              <br/>
+              <Form.Label className="required">Senha (mínimo de 6 catacteres)</Form.Label><br/>
+              <Password size="30" autoComplete="off" onChange={(e) => setPassword(e)} name="senha" weakLabel="Senha fraca" mediumLabel="Senha média" strongLabel="Senha forte"
+              placeholder="Insira aqui sua senha" />
+            </Col>
+            <Col lg={4} md={10}>
+              <br/>
+              <Form.Label  className="required">Confirmação de senha</Form.Label><br/>
+              <Password size="30" autoComplete="off" onChange={(e) => setPassword(e)} name="senhaConfirma" weakLabel="Senha fraca" mediumLabel="Senha média" strongLabel="Senha forte"
+              placeholder="Confirme sua senha" />
+            </Col>
           </Row>
           <Row>
             <Col className="justify-content-md-center">
               <br/><br/><br/>
               <center>
-                <Button label="Cadastrar-se" size="45" type="submit"/>
+                <Button disabled={confirmaSenha} label="Cadastrar-se" size="45" type="submit"/>
               </center>
             </Col>
           </Row>
           </form>
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <br/><br/><br/>
+          </div>
+          }
         </Container>
       </div>
-      </div>
-    )
-  }
+  )
 }

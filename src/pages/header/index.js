@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Segment, } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import './header.css';
 import firebase from './../../config/fireConnection';

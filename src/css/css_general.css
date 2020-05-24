@@ -9,6 +9,15 @@
 
 }
 
+.alertField {
+    color: red;
+}
+
+.required:after {
+    content:" *"; 
+    color: red;
+  }
+
 body, html {
     height: 100%;
     margin: 0;

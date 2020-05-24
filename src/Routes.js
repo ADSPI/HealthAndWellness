@@ -29,12 +29,8 @@ class Routes extends Component{
   componentDidMount(){
     firebase.isInitialized().then(resultado => {
       if(resultado == null) resultado = false;
-      
       // Devolve o usuario
       this.setState({firebaseInitialized: resultado});
-      //Linha adicionada
-      console.log(resultado);
-      
     })
   }
 

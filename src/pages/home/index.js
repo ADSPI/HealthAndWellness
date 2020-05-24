@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import logo from './../../img/logo.png';
-import firebase from './../../config/fireConnection';
 
 export default function Home() {
 
@@ -10,7 +9,7 @@ export default function Home() {
         <center>
         <h1>Quem somos</h1>
         </center>
-        <img src={logo} style={{width:'30%'}}/>
+        <img src={logo} alt="Logo da Health and Wellness" style={{width:'30%'}}/>
         Seja bem-vindo ao Health and Wellness, não repare a bagunça, ainda estamos em estágio embrionário!
       </div>
 

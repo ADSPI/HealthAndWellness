@@ -40,7 +40,6 @@ class Logar extends Component{
   }
 
   login = async () => {
-    var atual = window.location.href;
 
     const {email, password} = this.state;
 
@@ -73,6 +72,7 @@ class Logar extends Component{
                   <br/><br/>
                   <form onSubmit={this.entrar} id="login">
                     <table>
+                      <thead>
                       <tr>
                         <th>
                           <label>Email</label><br/>
@@ -103,6 +103,7 @@ class Logar extends Component{
                           <br/><br/>
                         </th>
                       </tr>
+                      </thead>
                     </table>
                   </form>
                 </center>
@@ -119,7 +120,7 @@ class Logar extends Component{
                 levando todos seus antecedentes de saúde.
               </p>
               <center>
-                <img src={logo} style={{width:'70%'}}/>
+                <img src={logo} alt="Logo da Health and Wellness" style={{width:'70%'}}/>
               </center>
               <p>Crie seu <Link to="/cadastro">cadastro</Link> e experimente a independência do seu prontuário na palma da sua mão.</p>
               <br/><br/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import "./footer.css";
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 var style = {
     backgroundColor: "#F8F8F8",
