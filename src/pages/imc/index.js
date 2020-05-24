@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import ImcService from './../../services/imc/ImService';
 import Container from 'react-bootstrap/Container';
 import "./../../css/css_general.css"
+import Validador from './../../services/util/validador';
 
 export default function Imc() {
 
@@ -40,12 +41,12 @@ export default function Imc() {
           <Row className="justify-content-md-center">
             <Col lg={6} md={10}>
                 <Form.Label>Peso</Form.Label>
-                <Form.Control name="peso" type="text" maxLength="3" ref={register({required:true, min: 1, max: 3})} placeholder="Insira seu peso em kg" />
+                <Form.Control name="peso" type="text" maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, min: 1, max: 3})} placeholder="Insira seu peso em kg" />
                 {errors.peso && errors.peso.type === "required" && <span className="alertField">Campo peso é requerido</span>}
             </Col>
             <Col lg={6} md={10}>
               <Form.Label>Altura</Form.Label>
-              <Form.Control name="altura" type="number" maxLength="3" ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
+              <Form.Control name="altura" type="number" maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
               {errors.altura && errors.altura.type === "required" && <span className="alertField">Campo altura é requerido</span>}
             </Col>
             <Col>

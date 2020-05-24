@@ -95,7 +95,7 @@ export default function Cadastrar (){
               <br/>
               <Form.Label>Telefone</Form.Label><br/>
               <Form.Control type="text" name="telefone" maxLength="11" ref={register({maxLength: 11})}
-               placeholder="Insira aqui seu telefone" onKeyUp={(e) => Validador.formatNumber(e)}/>
+               placeholder="Insira aqui seu telefone (apenas números)" onKeyUp={(e) => Validador.formatNumber(e)}/>
               {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números</span> }
             </Col>
             <Col lg={4} md={10}>
@@ -126,7 +126,7 @@ export default function Cadastrar (){
               <Password size="30" autoComplete="off" onChange={(e) => setPassword(e)} name="senhaConfirma" weakLabel="Senha fraca" mediumLabel="Senha média" strongLabel="Senha forte"
               placeholder="Confirme sua senha"/><br/>
               {confirmaSenha?
-                <span className="alertField">As senhas não coincidem</span> 
+                <span className="alertField">As senhas devem coincidir</span> 
                 : null
               }
               
