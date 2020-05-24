@@ -7,7 +7,6 @@ import Header from './pages/header';
 import HeaderSemLogar from './fragment/header/HeaderSemLogar';
 import Footer from './fragment/footer';
 
-
 //PAGES
 import Cadastrar from './pages/auth/Cadastrar';
 import Logar from './pages/auth/Logar';
@@ -19,8 +18,69 @@ import historicoExame from './pages/exame/historicoExame';
 import novoExame from './pages/exame/novoExame';
 import perfil from './pages/perfil';
 import Imc from './pages/imc';
+import Loading from './pages/loading';
 
 class Routes extends Component{
+
+  state = {
+    firebaseInitialized: null
+  };
+
+  componentDidMount(){
+    firebase.isInitialized().then(resultado => {
+      if(resultado == null) resultado = false;
+      
+      // Devolve o usuario
+      this.setState({firebaseInitialized: resultado});
+      //Linha adicionada
+      console.log(resultado);
+      
+    })
+  }
+
+  render(){
+    return this.state.firebaseInitialized !== false ? (
+      <BrowserRouter>
+        <Header/>
+        <MenuBar/>
+        {this.state.firebaseInitialized == null ?
+          <Loading/>
+          : 
+          <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/novaConsulta" component={novaConsulta}/>
+          <Route exact path="/historicoConsulta" component={historicoConsulta}/>
+          <Route exact path="/historicoExame" component={historicoExame}/>
+          <Route exact path="/novoExame" component={novoExame}/>
+          <Route exact path="/imc" component={Imc}/>
+          <Route exact path="/perfil" component={perfil}/>
+          <Route path="*" component={ErrorUrl}/>
+        </Switch>
+        }
+        
+        <Footer/>
+      </BrowserRouter>
+    ) : (
+          <BrowserRouter>
+          <HeaderSemLogar/>
+          {this.state.firebaseInitialized == null ?
+          <Loading/>
+          : 
+          <Switch>
+              <Route exact path="/cadastro" component={Cadastrar} />
+              <Route exact path="/" component={Logar} />
+              <Route path="*" component={Logar}/>
+            </Switch>
+          }
+          <Footer/>
+          </BrowserRouter>
+    );
+  }
+}
+
+export default Routes;
+
+/*class Routes extends Component{
 
   state = {
     firebaseInitialized: false
@@ -41,8 +101,8 @@ class Routes extends Component{
   render(){
     return this.state.firebaseInitialized !== false ? (
       <BrowserRouter>
-        <MenuBar/>
         <Header/>
+        <MenuBar/>
         <Switch>
           <Route exact path="/" component={Home}/>
           <Route exact path="/novaConsulta" component={novaConsulta}/>
@@ -56,18 +116,17 @@ class Routes extends Component{
         <Footer/>
       </BrowserRouter>
     ) : (
-      <BrowserRouter>
-        <HeaderSemLogar/>
-        <Switch>
-          <Route exact path="/cadastro" component={Cadastrar} />
-          <Route exact path="/" component={Logar} />
-          <Route path="*" component={ErrorUrl}/>
-        </Switch>
-        <Footer/>
-      </BrowserRouter>
-      
+          <BrowserRouter>
+          <HeaderSemLogar/>
+          <Switch>
+            <Route exact path="/cadastro" component={Cadastrar} />
+            <Route exact path="/" component={Logar} />
+            <Route path="*" component={Logar}/>
+          </Switch>
+          <Footer/>
+          </BrowserRouter>
     );
   }
 }
 
-export default Routes;
+export default Routes;*/

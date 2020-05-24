@@ -3,17 +3,13 @@ import firebase from './../../config/fireConnection';
 import {Link, withRouter} from 'react-router-dom';
 import {InputText} from 'primereact/inputtext';
 import {Button} from 'primereact/button';
-import {Panel} from 'primereact/panel';
-import {Dropdown} from 'primereact/dropdown';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import logo from './../../img/logo.png';
-import {Helmet} from "react-helmet";
 
 import './Logar.css';
 import './../../css/css_general.css';
-
 
 class Logar extends Component{
 
@@ -44,6 +40,8 @@ class Logar extends Component{
   }
 
   login = async () => {
+    var atual = window.location.href;
+
     const {email, password} = this.state;
 
       await firebase.login(email, password)
@@ -59,36 +57,33 @@ class Logar extends Component{
         }
       }
       });
-
     document.location.assign('/');
   }
 
   render(){
     return(
-        <div class="container-bg">
+        <div>
         <Container>
-          <div  >
-
           <section>
-          <br/><vr/>
+          <br/>
           <Row className="justify-content-md-center">
           <Col lg={4} md={12}>
                 <center><h2>Login</h2></center>
                 <center>
+                  <br/><br/>
                   <form onSubmit={this.entrar} id="login">
                     <table>
                       <tr>
                         <th>
                           <label>Email</label><br/>
-                          <InputText type="email" size="45" autoComplete="off" value={this.state.email} 
+                          <InputText type="email" size="40" autoComplete="off" value={this.state.email} 
                           onChange={(e) => this.setState({email: e.target.value})} placeholder="Insira aqui seu email"/>
                         </th>
                       </tr>
                       <tr>
                         <th>
-                        <br/>
                         <label>Senha</label> <br/>
-                          <InputText type="password" size="45" autoComplete="off" value={this.state.password}
+                          <InputText type="password" size="40" autoComplete="off" value={this.state.password}
                           onChange={(e) => this.setState({password: e.target.value})} placeholder="Insira aqui sua senha" />
                         </th>
                       </tr>
@@ -123,45 +118,22 @@ class Logar extends Component{
                 de consulta e exame, trazendo a comodidade e liberdade de migrar de hospitais/médicos
                 levando todos seus antecedentes de saúde.
               </p>
-              <p>Crie seu cadastro e experimente a independência do seu prontuário na palma da sua mão.</p>
               <center>
                 <img src={logo} style={{width:'70%'}}/>
               </center>
+              <p>Crie seu <Link to="/cadastro">cadastro</Link> e experimente a independência do seu prontuário na palma da sua mão.</p>
               <br/><br/>
             </Col>
-            
+            <Col  className="d-none d-xl-block">
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            </Col>
           </Row>
           </section>
-          <br/><br/><br/>
-          </div>
+          
           </Container>        
       </div>
     );
   }
 }
-
-
-  /*render(){
-    return(
-      <div>
-        <h2>Login do usuário</h2>
-        <form onSubmit={this.entrar} id="login">
-          <label>Email:</label><br/>
-          <input type="email" autoComplete="off" autoFocus value={this.state.email}
-          onChange={(e) => this.setState({email: e.target.value})} placeholder="Insira seu email"/>
-          <br/>
-          <label>Password:</label><br/>
-          <input type="password" autoComplete="off" value={this.state.password}
-          onChange={(e) => this.setState({password: e.target.value})} placeholder="Insira sua senha"
-          /><br/>
-
-          <button type="submit">Entrar</button>
-          <br/>
-          <Link to="/cadastro">Ainda não possui uma conta?</Link>
-        </form>
-      </div>
-    );
-  }
-}*/
 
 export default withRouter(Logar);

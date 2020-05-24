@@ -1,38 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
+import React from 'react';
+import "./footer.css";
 import {Link, withRouter} from 'react-router-dom';
 
-export default function Footer() {
+var style = {
+    backgroundColor: "#F8F8F8",
+    borderTop: "1px solid #E7E7E7",
+    textAlign: "center",
+    padding: "20px",
+    position: "fixed",
+    left: "0",
+    bottom: "0",
+    height: "60px",
+    width: "100%",
+}
+
+var phantom = {
+  display: 'block',
+  padding: '20px',
+  height: '30px',
+  width: '100%',
+}
+
+function Footer({ children }) {
 
     const sobeParaOTopo = () => {
         window.scrollTo(0, 0);
     };
 
-  return (
-        <Container>
-            <footer>
-            <Row>
-                <Col md={8}>
-                    <table>
-                        <tr>
-                            <th>
-                                <Link to="/">Página inicial</Link>
-                            </th>
-                            <th>
-                                <Link onClick={() => sobeParaOTopo()}>Início da página</Link>
-                            </th>
-                        </tr>
-                    </table>
-                </Col>
-            </Row>
-        <MDBContainer fluid>
-          &copy; {new Date().getFullYear()} Copyright: <a href="https://www.mdbootstrap.com"> MDBootstrap.com </a>
-        </MDBContainer>
-      
-    </footer>
-    </Container>
-  );
+    return (
+        <div>
+        <div style={phantom} />
+            <div style={style}>
+                <center>
+                    &copy; {new Date().getFullYear()} Copyright: <a href="https://client-health-wellness.herokuapp.com/"> health-wellness.com</a> |  • <Link to="/">Página inicial</Link>  • <Link onClick={() => sobeParaOTopo()}>Início da página</Link>
+                </center>
+            </div>
+        </div>
+    )
 }
+
+export default Footer;
