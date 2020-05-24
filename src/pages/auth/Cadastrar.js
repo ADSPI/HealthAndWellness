@@ -89,14 +89,14 @@ export default function Cadastrar (){
               <Form.Control type="text" name="nome" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui seu nome"/>
               {errors.nome && errors.nome.type === "required" && <span className="alertField">Campo nome é requerido.</span>}
-              {errors.nome && errors.nome.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres.</span> }
+              {errors.nome && errors.nome.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
             </Col>
             <Col lg={4} md={10}>
               <br/>
               <Form.Label>Telefone</Form.Label><br/>
               <Form.Control type="text" name="telefone" maxLength="11" ref={register({maxLength: 11})}
                placeholder="Insira aqui seu telefone" onKeyUp={(e) => Validador.formatNumber(e)}/>
-              {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números.</span> }
+              {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números</span> }
             </Col>
             <Col lg={4} md={10}>
               <br/>
@@ -111,7 +111,7 @@ export default function Cadastrar (){
               <Form.Label className="required">Email</Form.Label>
               <Form.Control type="email" name="email" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui seu email"/>
-              {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é requerido.</span>}
+              {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é requerido</span>}
               {errors.email && errors.email.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
             </Col>
             <Col lg={4} md={10}>
