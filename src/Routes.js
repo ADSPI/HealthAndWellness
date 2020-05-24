@@ -3,7 +3,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import firebase from './config/fireConnection';
 //FRAGMENT
 import MenuBar from './fragment/menuBar';
-import Header from './pages/header';
+import Header from './fragment/header';
 import HeaderSemLogar from './fragment/header/HeaderSemLogar';
 import Footer from './fragment/footer';
 

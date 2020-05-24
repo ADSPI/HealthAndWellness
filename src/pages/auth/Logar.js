@@ -125,9 +125,7 @@ class Logar extends Component{
               <p>Crie seu <Link to="/cadastro">cadastro</Link> e experimente a independência do seu prontuário na palma da sua mão.</p>
               <br/><br/>
             </Col>
-            <Col  className="d-none d-xl-block">
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            </Col>
+            <br/>
           </Row>
           </section>
           

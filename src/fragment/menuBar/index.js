@@ -36,7 +36,7 @@ export default function MenuBar() {
     },
     {
        label:'Exame',
-       icon:'pi pi-save',
+       icon:'pi pi-id-card',
        items:[
           {
              label:'Novo exame',
