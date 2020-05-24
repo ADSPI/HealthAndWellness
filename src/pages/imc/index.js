@@ -19,6 +19,7 @@ export default function Imc() {
 
     setshowAlert(true);
     setShowStatus(valor);
+    window.scrollTo(0, 1000);
   };
 
   return (

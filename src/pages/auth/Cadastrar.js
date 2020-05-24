@@ -24,7 +24,7 @@ export default function Cadastrar (){
   const [confirmaSenha, setConfirmaSenha] = useState(true);
 
   const setPassword = (e) => {
-    if(e.target.name === "senha" ) {
+    if(e.target.name === "senha") {
       setSenha(e.target.value);
       if(e.target.value.length >= 6 && e.target.value === senhaConfirma){
         setConfirmaSenha(false);
@@ -124,7 +124,12 @@ export default function Cadastrar (){
               <br/>
               <Form.Label  className="required">Confirmação de senha</Form.Label><br/>
               <Password size="30" autoComplete="off" onChange={(e) => setPassword(e)} name="senhaConfirma" weakLabel="Senha fraca" mediumLabel="Senha média" strongLabel="Senha forte"
-              placeholder="Confirme sua senha" />
+              placeholder="Confirme sua senha"/><br/>
+              {confirmaSenha?
+                <span className="alertField">As senhas não coincidem</span> 
+                : null
+              }
+              
             </Col>
           </Row>
           <Row>
