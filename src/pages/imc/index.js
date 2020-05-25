@@ -15,6 +15,28 @@ export default function Imc() {
   const [ showStatus, setShowStatus ] = useState();
   const [ showAlert, setshowAlert ] = useState(false);
 
+  const [ altura, setAltura ] = useState("");
+  const [ peso, setPeso ] = useState("");
+  const [ buttonVisible, setButtonVisible ] = useState(true);
+
+  const habilitaButton = (e) => {
+    console.log(e.target.value);
+    if(e.target.name === "peso") {
+      setPeso(e.target.value);
+    } else {
+      if(e.target.name === "altura") {
+        setAltura(e.target.value);
+      }
+    }
+
+    //if(altura !== "" || peso !== ""){
+    if(altura === "" || peso === ""){
+      setButtonVisible(false);
+    } else {
+      setButtonVisible(true);
+    }
+  };
+
   const onSubmit = data => {
     let valor =  ImcService.calculaImc(data);
 
@@ -46,7 +68,7 @@ export default function Imc() {
             </Col>
             <Col lg={6} md={10}>
               <Form.Label>Altura</Form.Label>
-              <Form.Control name="altura" type="number" maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
+              <Form.Control name="altura" type="text" onChange={(e) => habilitaButton(e)} maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
               {errors.altura && errors.altura.type === "required" && <span className="alertField">Campo altura é requerido</span>}
             </Col>
             <Col>
@@ -54,7 +76,7 @@ export default function Imc() {
               <Row>
                   <Col className="justify-content-md-center">
                   <center>
-                    <Button label="Calcular" type="submit"/>
+                    <Button label="Calcular" disabled={buttonVisible} className="p-button-danger" type="submit"/>
                   </center>
                   </Col>
               </Row>

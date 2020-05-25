@@ -136,7 +136,7 @@ export default function Cadastrar (){
             <Col className="justify-content-md-center">
               <br/><br/><br/>
               <center>
-                <Button disabled={confirmaSenha} label="Cadastrar-se" size="45" type="submit"/>
+                <Button disabled={confirmaSenha} label="Cadastrar-se" className="p-button-danger" type="submit"/>
               </center>
             </Col>
           </Row>

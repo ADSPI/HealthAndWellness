@@ -91,7 +91,7 @@ class Logar extends Component{
                         <th>
                           <br/>
                             <center>
-                              <Button label="Entrar" size="45" type="submit"/>
+                              <Button label="Entrar" className="p-button-danger" size="45" type="submit"/>
                             </center>
                         </th>
                       </tr>
