@@ -10,6 +10,7 @@ import {Password} from 'primereact/password';
 import Loading from '../loading';
 import firebase from './../../config/fireConnection';
 import Validador from './../../services/util/validador';
+import {Link} from 'react-router-dom';
 
 import './../../css/css_general.css';
 
@@ -54,7 +55,7 @@ export default function Cadastrar (){
     setLoading(true);
     data.dataNascimento = dataNascimento;
     console.log(data);
-    /*firebase.cadastrar(data.email, senha)
+    firebase.cadastrar(data.email, senha)
     .then(retorno => {
       alert("Parabéns, você foi cadastrado com sucesso!");
       document.location.assign('/');
@@ -70,7 +71,7 @@ export default function Cadastrar (){
             alert("Ops, algum erro em seu cadastro: " + error.code)
           }
         }
-    })*/
+    })
   }
   return (
     
@@ -94,14 +95,14 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label>Telefone</Form.Label><br/>
-              <Form.Control type="text" name="telefone" maxLength="11" ref={register({maxLength: 11})}
-               placeholder="Insira aqui seu telefone (apenas números)" onKeyUp={(e) => Validador.formatNumber(e)}/>
+              <Form.Control type="text" name="telefone" maxLength="14" ref={register({maxLength: 14})}
+               placeholder="Insira aqui seu ddd e telefone (apenas números)" onKeyUp={(e) => Validador.formatNumber(e)}/>
               {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números</span> }
             </Col>
             <Col lg={4} md={10}>
               <br/>
               <Form.Label>Data nascimento</Form.Label><br/>
-              <Calendar onChange={(e) => convertDate(e.target.value)}
+              <Calendar onChange={(e) => convertDate(e.target.value)} dateFormat="dd/mm/yy"
               monthNavigator={true} yearNavigator={true} yearRange="1950:2020" placeholder="dd/mm/aaaa"/>
             </Col>
           </Row>
@@ -132,14 +133,22 @@ export default function Cadastrar (){
               
             </Col>
           </Row>
-          <Row>
-            <Col className="justify-content-md-center">
-              <br/><br/><br/>
-              <center>
-                <Button disabled={confirmaSenha} label="Cadastrar-se" size="45" type="submit"/>
-              </center>
-            </Col>
-          </Row>
+          <Row lg={6} className="justify-content-md-center">
+              <Col>
+                <br/><br/><br/>
+                <center>
+                  <Link to="/">
+                    <Button label="Cancelar" className="p-button-secondary"/>
+                  </Link>
+                </center>
+              </Col>
+              <Col>
+                <br/><br/><br/>
+                <center>
+                  <Button disabled={confirmaSenha} label="Cadastrar-se" size="45" className="p-button-danger" type="submit"/>
+                </center>
+              </Col>
+            </Row>
           </form>
           <br/><br/><br/>
           </div>

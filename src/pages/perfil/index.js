@@ -102,6 +102,7 @@ export default function Perfil() {
                   yearNavigator={true}
                   yearRange="1950:2020"
                   placeholder="dd/mm/aaaa"
+                  dateFormat="dd/mm/yy"
                   disabled={stateEdit}
                 />
               </Col>
