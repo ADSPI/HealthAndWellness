@@ -6,7 +6,7 @@ var style = {
     backgroundColor: "#F8F8F8",
     borderTop: "1px solid #E7E7E7",
     textAlign: "center",
-    padding: "20px",
+    padding: "8px",
     position: "fixed",
     left: "0",
     bottom: "0",
@@ -29,10 +29,12 @@ function Footer({ children }) {
 
     return (
         <div>
-        <div style={phantom} />
             <div style={style}>
                 <center>
-                    &copy; {new Date().getFullYear()} Copyright: <a href="https://client-health-wellness.herokuapp.com/"> health-wellness.com</a> |  • <Link to="/">Página inicial</Link>  • <Link onClick={() => sobeParaOTopo()}>Início da página</Link>
+                  • <Link to="/">Página inicial</Link>  • <Link onClick={() => sobeParaOTopo()}>Início da página</Link>
+                </center>
+                <center>
+                    &copy; {new Date().getFullYear()} Copyright: <a href="https://client-health-wellness.herokuapp.com/"> health-wellness.com</a> | Todos direitos reservados
                 </center>
             </div>
         </div>
