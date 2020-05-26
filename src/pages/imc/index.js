@@ -71,17 +71,16 @@ export default function Imc() {
               <Form.Control name="altura" type="text" onChange={(e) => habilitaButton(e)} maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
               {errors.altura && errors.altura.type === "required" && <span className="alertField">Campo altura é requerido</span>}
             </Col>
-            <Col>
-              <br/><br/>
-              <Row>
-                  <Col className="justify-content-md-center">
-                  <center>
-                    <Button label="Calcular" disabled={buttonVisible} className="p-button-danger" type="submit"/>
-                  </center>
-                  </Col>
-              </Row>
+          </Row>
+          <br/><br/>
+          <Row>
+            <Col className="justify-content-md-center">
+              <center>
+                <Button label="Calcular" disabled={buttonVisible} className="p-button-danger" type="submit"/>
+              </center>
             </Col>
-        </Row>
+          </Row>
+       
         </form>
         <br/><br/>
         {showAlert?

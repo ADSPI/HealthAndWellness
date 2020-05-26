@@ -54,7 +54,7 @@ export default function Cadastrar (){
     setLoading(true);
     data.dataNascimento = dataNascimento;
     console.log(data);
-    firebase.cadastrar(data.email, senha)
+    /*firebase.cadastrar(data.email, senha)
     .then(retorno => {
       alert("Parabéns, você foi cadastrado com sucesso!");
       document.location.assign('/');
@@ -70,7 +70,7 @@ export default function Cadastrar (){
             alert("Ops, algum erro em seu cadastro: " + error.code)
           }
         }
-    })
+    })*/
   }
   return (
     
@@ -136,7 +136,7 @@ export default function Cadastrar (){
             <Col className="justify-content-md-center">
               <br/><br/><br/>
               <center>
-                <Button disabled={confirmaSenha} label="Cadastrar-se" className="p-button-danger" type="submit"/>
+                <Button disabled={confirmaSenha} label="Cadastrar-se" size="45" type="submit"/>
               </center>
             </Col>
           </Row>
