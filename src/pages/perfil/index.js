@@ -67,16 +67,16 @@ export default function Perfil() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row className="justify-content-md-center">
               <Col lg={5} md={10}><br/>
-                <Form.Label className="required">Nome</Form.Label>
+                <Form.Label className="required">Nome completo</Form.Label>
                 <Form.Control 
                   type="text" 
                   name="nome"
                   maxLength="50"
                   ref={register({required:true, maxLength: 50})}
-                  placeholder="Insira aqui seu nome"
+                  placeholder="Insira aqui seu nome completo"
                   disabled={stateEdit}
                 />
-              {errors.nome && errors.nome.type === "required" && <span className="alertField">Campo nome é requerido.</span>}
+              {errors.nome && errors.nome.type === "required" && <span className="alertField">Campo nome é obrigatório</span>}
               {errors.nome && errors.nome.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
               </Col>
               <Col lg={5} md={10}><br/>
@@ -116,7 +116,7 @@ export default function Perfil() {
                   placeholder="Insira aqui seu email"
                   disabled={stateEdit}
                 />
-              {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é requerido</span>}
+              {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é obrigatório</span>}
               {errors.email && errors.email.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
               </Col>
             </Row>
