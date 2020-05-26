@@ -100,7 +100,7 @@ export default function Perfil() {
                   onChange={(e) => convertDate(e.target.value)}
                   monthNavigator={true}
                   yearNavigator={true}
-                  yearRange="1950:2020"
+                  yearRange="1900:2020"
                   placeholder="dd/mm/aaaa"
                   dateFormat="dd/mm/yy"
                   disabled={stateEdit}
