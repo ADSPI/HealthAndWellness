@@ -103,7 +103,7 @@ export default function Cadastrar (){
               <br/>
               <Form.Label>Data nascimento</Form.Label><br/>
               <Calendar onChange={(e) => convertDate(e.target.value)} dateFormat="dd/mm/yy"
-              monthNavigator={true} yearNavigator={true} yearRange="1950:2020" placeholder="dd/mm/aaaa"/>
+              monthNavigator={true} yearNavigator={true} yearRange="1900:2020" placeholder="dd/mm/aaaa"/>
             </Col>
           </Row>
           <Row className="justify-content-md-center">
