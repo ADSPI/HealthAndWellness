@@ -63,12 +63,12 @@ export default function Imc() {
           <Row className="justify-content-md-center">
             <Col lg={6} md={10}>
                 <Form.Label>Peso</Form.Label>
-                <Form.Control name="peso" type="text" maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, min: 1, max: 3})} placeholder="Insira seu peso em kg" />
+                <Form.Control name="peso" type="text" maxLength="3" onKeyUp={(e) => Validador.formatJustNumber(e)} ref={register({required:true, min: 1, max: 3})} placeholder="Insira seu peso em kg" />
                 {errors.peso && errors.peso.type === "required" && <span className="alertField">Campo peso é requerido</span>}
             </Col>
             <Col lg={6} md={10}>
               <Form.Label>Altura</Form.Label>
-              <Form.Control name="altura" type="text" onChange={(e) => habilitaButton(e)} maxLength="3" onKeyUp={(e) => Validador.formatNumber(e)} ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
+              <Form.Control name="altura" type="text" onChange={(e) => habilitaButton(e)} maxLength="3" onKeyUp={(e) => Validador.formatJustNumber(e)} ref={register({required:true, maxlength: 2})} placeholder="Insira sua altura em cm" />
               {errors.altura && errors.altura.type === "required" && <span className="alertField">Campo altura é requerido</span>}
             </Col>
           </Row>
@@ -86,7 +86,7 @@ export default function Imc() {
         {showAlert?
           <center>
             <h3>{showStatus}</h3>
-          <br/><br/><br/>
+          <br/><br/><br/><br/><br/>
           </center> 
         : null}
       </div>

@@ -14,13 +14,6 @@ var style = {
     width: "100%",
 }
 
-var phantom = {
-  display: 'block',
-  padding: '20px',
-  height: '30px',
-  width: '100%',
-}
-
 function Footer({ children }) {
 
     const sobeParaOTopo = () => {
@@ -34,7 +27,7 @@ function Footer({ children }) {
                   • <Link to="/">Página inicial</Link>  • <Link onClick={() => sobeParaOTopo()}>Início da página</Link>
                 </center>
                 <center>
-                    &copy; {new Date().getFullYear()} Copyright: <a href="https://client-health-wellness.herokuapp.com/"> health-wellness.com</a> | Todos direitos reservados
+                    &copy; {new Date().getFullYear()} Copyright: <a href="https://client-health-wellness.herokuapp.com/"> health-wellness.com</a>
                 </center>
             </div>
         </div>

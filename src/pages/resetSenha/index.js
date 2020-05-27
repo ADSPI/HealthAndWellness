@@ -5,24 +5,19 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import {Button} from 'primereact/button';
-import {Calendar} from 'primereact/calendar';
 import {Password} from 'primereact/password';
 import Loading from '../loading';
 import firebase from './../../config/fireConnection';
-import Validador from './../../services/util/validador';
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Messages} from 'primereact/messages';
-import {Message} from 'primereact/message';
-import {InputText} from 'primereact/inputtext';
 
 import './../../css/css_general.css';
 
 export default function Cadastrar (){
   let messages = useRef(null);
 
-  const { register, handleSubmit, errors } = useForm();
+  const {  handleSubmit } = useForm();
   const [ loading, setLoading ] = useState(false);
-  const [dataNascimento, setDataNascimento] = useState(null);
   const [senha, setSenha] = useState();
   const [senhaConfirma, setSenhaConfirma] = useState();
   const [atualPassword, setAtualPassword] = useState();
@@ -101,7 +96,6 @@ export default function Cadastrar (){
             <Loading/> :
         <div>
         
-
         <form onSubmit={handleSubmit(onSubmit)}>
         <Row className="justify-content-md-center">
             <Col lg={4} md={12}>
@@ -118,7 +112,7 @@ export default function Cadastrar (){
                     placeholder="Insira aqui sua atual senha"
                 />
             </Col>
-            <Col lg={4} md={12}>
+            <Col lg={4} md={12} xs={12}>
                 <br/>
                 <Form.Label className="required">Nova senha (mínimo de 6 catacteres)</Form.Label><br/>
                 <Password
@@ -130,9 +124,9 @@ export default function Cadastrar (){
                     mediumLabel="Senha média"
                     strongLabel="Senha forte"
                     placeholder="Insira aqui sua nova senha"
-                />
+                /> 
             </Col>
-            <Col lg={4} md={12}>
+            <Col lg={4} md={12} xs={12}>
                 <br/>
                 <Form.Label  className="required">Confirmação de senha</Form.Label><br/>
                 <Password
@@ -152,8 +146,8 @@ export default function Cadastrar (){
                 }
             </Col>
         </Row>
-        <Row lg={6} className="justify-content-md-center">
-            <Col>
+        <Row lg={6} md={12} className="justify-content-md-center">
+            <Col xs lg="2">
               <br/><br/><br/>
               <center>
                 <Link to="/perfil">
@@ -161,15 +155,15 @@ export default function Cadastrar (){
                 </Link>
               </center>
             </Col>
-            <Col>
+            <Col xs lg="3">
               <br/><br/><br/>
               <center>
-                <Button disabled={confirmaSenha} label="Alterar senha" className="p-button-danger" type="submit"/>
+                <Button disabled={confirmaSenha} label="Atualizar" className="p-button-danger" type="submit"/>
               </center>
             </Col>
         </Row>
         </form>
-        <br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/>
         </div>
         }
         </Container>

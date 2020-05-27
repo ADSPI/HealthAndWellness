@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -16,37 +16,12 @@ export default function Perfil() {
   const [loading, setLoading] = useState(false);
   const [dataNascimento, setDataNascimento] = useState(null);
   const [stateEdit, setStateEdit] = useState(true);
-  const [senha, setSenha] = useState();
-  const [senhaConfirma, setSenhaConfirma] = useState();
-
-  const [confirmaSenha, setConfirmaSenha] = useState(true);
-
-  useEffect(() => {
-    console.log("Iniciando");
-  });
 
   const onSubmit = data => {
+    setLoading(true);
+    data.dataNascimento = dataNascimento;
 
-  };
 
-  const setPassword = (e) => {
-    if(e.target.name === "senha") {
-      setSenha(e.target.value);
-      if(e.target.value.length >= 6 && e.target.value === senhaConfirma){
-        setConfirmaSenha(false);
-      } else {
-        setConfirmaSenha(true);
-      }
-    } else {
-      if(e.target.name === "senhaConfirma"){
-        setSenhaConfirma(e.target.value);
-        if(e.target.value.length >= 6 && e.target.value === senha){
-          setConfirmaSenha(false);
-        } else {
-          setConfirmaSenha(true);
-        }
-      }
-    }
   };
 
   const convertDate = (str) => {
