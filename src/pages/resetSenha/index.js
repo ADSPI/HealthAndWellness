@@ -21,26 +21,34 @@ export default function Cadastrar (){
   const [dataNascimento, setDataNascimento] = useState(null);
   const [senha, setSenha] = useState();
   const [senhaConfirma, setSenhaConfirma] = useState();
+  const [atualPassword, setAtualPassword] = useState();
 
   const [confirmaSenha, setConfirmaSenha] = useState(true);
 
   const setPassword = (e) => {
-    if(e.target.name === "senha") {
-      setSenha(e.target.value);
-      if(e.target.value.length >= 6 && e.target.value === senhaConfirma){
-        setConfirmaSenha(false);
-      } else {
-        setConfirmaSenha(true);
-      }
-    } else {
-      if(e.target.name === "senhaConfirma"){
-        setSenhaConfirma(e.target.value);
-        if(e.target.value.length >= 6 && e.target.value === senha){
-          setConfirmaSenha(false);
-        } else {
-          setConfirmaSenha(true);
+    if(e.target.name === "senhaAtual"){
+        setAtualPassword(e.target.value);
+        if((senhaConfirma === senha) && senha.length >= 6){
+            setConfirmaSenha(false);
         }
-      }
+    } else{
+        if(e.target.name === "senha") {
+            setSenha(e.target.value);
+            if(e.target.value.length >= 6 && e.target.value === senhaConfirma && atualPassword !== "" && atualPassword !== null && atualPassword !== undefined){
+              setConfirmaSenha(false);
+            } else {
+              setConfirmaSenha(true);
+            }
+          } else {
+            if(e.target.name === "senhaConfirma" ){
+              setSenhaConfirma(e.target.value);
+              if(e.target.value.length >= 6 && e.target.value === senha && atualPassword !== "" && atualPassword !== null && atualPassword !== undefined){
+                setConfirmaSenha(false);
+              } else {
+                setConfirmaSenha(true);
+              }
+            }
+        }
     }
   };
 
@@ -52,27 +60,31 @@ export default function Cadastrar (){
   }
 
   const onSubmit = data => {
-    setLoading(true);
-    data.dataNascimento = dataNascimento;
-    console.log(data);
-    firebase.cadastrar(data.email, senha)
-    .then(retorno => {
-      alert("Parabéns, você foi cadastrado com sucesso!");
-      document.location.assign('/');
-    })
-    .catch((error) => {
-      
-        if(error.code === "auth/invalid-email"){
-          alert('Email em formato inválido.');
-        } else {
-          if(error.code === "auth/weak-password"){
-          alert("Senha fraca, tamanho mínimo de 6 caracteres.");
-          } else {
-            alert("Ops, algum erro em seu cadastro: " + error.code)
-          }
+    let user = firebase.updatePassWord(atualPassword, senha);
+
+    //string newPassword = "SOME-SECURE-PASSWORD";
+    /*if (user != null) {
+        user.updatePassword(senha).then(() => {
+            console.log("Senha atualizada");
+            // Update successful.
+          }, (error) => {
+              console.log("Senha fracassada");
+            // An error happened.
+          });*/
+        /*user.UpdatePasswordAsync(senha).ContinueWith(task => {
+        if (task.IsCanceled) {
+            console.log("UpdatePasswordAsync was canceled.");
+            return;
         }
-    })
+        if (task.IsFaulted) {
+            console.log("UpdatePasswordAsync encountered an error: " + task.Exception);
+        return;
+        }
+        console.log("Senha alterada com sucesso");
+    });*/
+    //}
   }
+
   return (
     
     <div>
@@ -94,6 +106,8 @@ export default function Cadastrar (){
                     weakLabel="Senha fraca"
                     mediumLabel="Senha média"
                     strongLabel="Senha forte"
+                    onChange={(e) => setPassword(e)}
+                    onChange={(e) => setAtualPassword(e.target.value)}
                     placeholder="Insira aqui sua atual senha"
                 />
             </Col>

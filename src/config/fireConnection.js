@@ -54,6 +54,34 @@ class Firebase{
       })
   }
 
+ 
+
+  updatePassWord(atualPassword, senha){
+    var user = app.auth().currentUser;
+
+    const credential = app.auth.EmailAuthProvider.credential(user.email, atualPassword);
+    
+    //Reateuticando usuario
+    user.reauthenticateWithCredential(credential).then(() => {
+      //Alterando usuario
+      user.updatePassword(senha);
+      alert("Senha alterada com sucesso!");
+      console.log('Password Updated!');
+    })
+    .catch(error => {
+      if(error.code === 'auth/wrong-password'){
+        alert('Sua atual senha foi inserida incorretamente!');
+      }
+      alert("Ops, !");
+      console.error(error);
+    });
+
+  }
+
+  getUser(){
+    return app.auth().currentUser;
+  }
+
   getCurrent(){
     return app.auth().currentUser && app.auth().currentUser.email
   }

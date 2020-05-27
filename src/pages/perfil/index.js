@@ -130,7 +130,7 @@ export default function Perfil() {
                 <center>
                   <Link to="/resetSenha">Mudar senha?</Link>
                 </center>
-
+                <br/><br/><br/>
               </Col>
             </Row> :
             <Row lg={6} className="justify-content-md-center">
