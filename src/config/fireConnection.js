@@ -14,7 +14,6 @@ import 'firebase/storage';
     measurementId: "G-CPWP9D6RE5"
   };
 
-
 class Firebase{
   constructor(){
     app.initializeApp(firebaseConfig);
@@ -54,28 +53,16 @@ class Firebase{
       })
   }
 
- 
+  reLogin(atualPassword){
+    var user = app.auth().currentUser;
+    const credential = app.auth.EmailAuthProvider.credential(user.email, atualPassword);
+    return user.reauthenticateWithCredential(credential);
+  }
 
-  updatePassWord(atualPassword, senha){
+  updatePassWord(senha){
     var user = app.auth().currentUser;
 
-    const credential = app.auth.EmailAuthProvider.credential(user.email, atualPassword);
-    
-    //Reateuticando usuario
-    user.reauthenticateWithCredential(credential).then(() => {
-      //Alterando usuario
-      user.updatePassword(senha);
-      alert("Senha alterada com sucesso!");
-      console.log('Password Updated!');
-    })
-    .catch(error => {
-      if(error.code === 'auth/wrong-password'){
-        alert('Sua atual senha foi inserida incorretamente!');
-      }
-      alert("Ops, !");
-      console.error(error);
-    });
-
+    return user.updatePassword(senha);
   }
 
   getUser(){
@@ -100,9 +87,6 @@ class Firebase{
     .once('value').then(callback);
 
   }
-
-
-
 
 }
 

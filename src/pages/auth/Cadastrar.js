@@ -138,7 +138,7 @@ export default function Cadastrar (){
                 <br/><br/><br/>
                 <center>
                   <Link to="/">
-                    <Button label="Cancelar" className="p-button-secondary"/>
+                    <Button label="Voltar" className="p-button-secondary"/>
                   </Link>
                 </center>
               </Col>

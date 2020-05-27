@@ -43,8 +43,11 @@ class Logar extends Component{
 
     const {email, password} = this.state;
 
-      await firebase.login(email, password)
+      await firebase.login(email, password).then(() => {
+        document.location.assign('/');
+      })
       .catch((error)=>{
+        this.setState({password: ''});
         if(error.code === 'auth/user-not-found'){
           alert('Este usuario não existe!');
         }else{
@@ -56,7 +59,7 @@ class Logar extends Component{
         }
       }
       });
-    document.location.assign('/');
+    
   }
 
   render(){
