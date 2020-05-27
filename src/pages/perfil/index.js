@@ -84,8 +84,8 @@ export default function Perfil() {
                 <Form.Control
                   type="text"
                   name="telefone"
-                  maxLength="11"
-                  ref={register({maxLength: 11})}
+                  maxLength="14"
+                  ref={register({maxLength: 14})}
                   placeholder="Insira aqui seu telefone (apenas números)"
                   onKeyUp={(e) => Validador.formatNumber(e)}
                   disabled={stateEdit}
@@ -128,7 +128,7 @@ export default function Perfil() {
                   <Button label="Editar" onClick={() => setStateEdit(false)} className="p-button-danger"/>
                 </center><br/>
                 <center>
-                  <Link to="/resetSenha">Mudar senha?</Link>
+                  <Link to="/resetSenha">Alterar senha?</Link>
                 </center>
                 <br/><br/><br/>
               </Col>
