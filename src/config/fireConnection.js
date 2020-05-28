@@ -65,6 +65,12 @@ class Firebase{
     return user.updatePassword(senha);
   }
 
+  sendPasswordToResetEmail(emailToChange){
+    var user = app.auth();
+
+    return user.sendPasswordResetEmail(emailToChange);
+  }
+
   getUser(){
     return app.auth().currentUser;
   }
