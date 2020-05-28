@@ -43,12 +43,10 @@ class Logar extends Component{
     })
   }
 
-  //showSuccess = async () => {
   showSuccess() {
     this.messages.show({severity: 'success', summary: 'Um email para redefinição de senha foi enviado com sucesso' });
   }
-
-  //showError = async (messagem) => {
+  
   showError(messagem) {
     this.messages.show({severity: 'error', summary: messagem });
   }
@@ -69,14 +67,14 @@ class Logar extends Component{
       .catch((error)=>{
         this.setState({password: ''});
         if(error.code === 'auth/user-not-found'){
-          alert('Email não encontrado em nosso sistema');
+          this.showError('Email não encontrado em nosso sistema');
         }else{
           if(error.code === 'auth/wrong-password'){
-            alert('Ops, senha incorreta, tente novamente');
+            this.showError('Ops, senha incorreta, tente novamente');
           } else {
-          alert('Codigo de erro:' + error.code);
-          return null;
-        }
+            this.showError('Ops, algo de errado aconteceu: ' + error.code);
+            return null;
+          }
       }
       });
   }
@@ -228,7 +226,7 @@ class Logar extends Component{
                 <img src={logo} alt="Logo da Health and Wellness" style={{width:'70%'}}/>
               </center>
               <p>Crie seu <Link to="/cadastro">cadastro</Link> e experimente a independência do seu prontuário na palma da sua mão.</p>
-              <br/><br/>
+              <br/><br/><br/><br/>
             </Col>
             <br/>
           </Row>
