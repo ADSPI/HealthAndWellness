@@ -15,14 +15,33 @@ class ServiceConsulta{
         console.log(consulta);
     };
 
+    atualizaConsulta(data){
+        let consulta = [];
+        consulta.id_paciente = firebase.getUID().toString();
+        consulta.sintoma = data.sintoma;
+        consulta.diagnostico = data.diagnostico;
+        consulta.medicacao = data.medicacao;
+        consulta.id_medico = data.id_medico;
+        consulta.titulo = data.titulo;
+        console.log(consulta);
+    };
+
     listaConsulta(){
 
         return null;
     }
 
-    listaConsultaMockado(){
+    getConsulta(id_consulta){
 
+        return null;
+    }
+
+    listaConsultaMockado(){
         return dadosConsulta.consultas();
+    }
+
+    getConsultaMockado(idConsulta){
+        return dadosConsulta.consulta();
     }
 
     especialidade(){

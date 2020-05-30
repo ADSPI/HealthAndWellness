@@ -20,8 +20,6 @@ export default function Perfil() {
   const onSubmit = data => {
     setLoading(true);
     data.dataNascimento = dataNascimento;
-
-
   };
 
   const convertDate = (str) => {

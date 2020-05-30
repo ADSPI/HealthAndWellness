@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Loading from '../loading';
 import {Button} from 'primereact/button';
 import ServiceConsulta from './../../services/consulta/ServiceConsulta';
+import {Link} from 'react-router-dom';
 
 export default function HistoricoConsulta (){
 
@@ -30,7 +31,10 @@ export default function HistoricoConsulta (){
 
     const visualizarConsulta = (rowData, column) => {
       return <div>
-          <Button type="button" icon="pi pi-search" className="p-button-success" style={{marginRight: '.5em'}}></Button>
+        <Link to={'/consulta/' + rowData.id_consulta}>
+          <Button type="button" icon="pi pi-search"className="p-button-success" style={{marginRight: '.5em'}}></Button>
+        </Link>
+          
       </div>;
     };
 
@@ -48,10 +52,10 @@ export default function HistoricoConsulta (){
           
               <DataTable ref={dt} value={consulta} paginator={true} rows={10} header={header}
                   globalFilter={globalFilter} emptyMessage="Nenhuma consulta encontrada">
-                  <Column field="id_consulta" header="ID" sortable filter={true} filterPlaceholder="ID da consulta"/>
+                  <Column field="id_consulta" header="ID" sortable filter={true} filterPlaceholder="ID da consulta" style={{textAlign:'center', width: '6em'}}/>
                   <Column field="titulo" header="Título" sortable filter={true} filterPlaceholder="Título da consulta"/>
                   <Column field="data" header="Data" sortable filter={true} filterPlaceholder="Data da consulta"/>
-                  <Column header="Visualizar" body={visualizarConsulta} style={{textAlign:'center', width: '8em'}}/>
+                  <Column header="+" body={visualizarConsulta} style={{textAlign:'center', width: '4em'}}/>
               </DataTable>
           </div>
           </div>}

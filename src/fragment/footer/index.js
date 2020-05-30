@@ -16,15 +16,15 @@ var style = {
 
 function Footer({ children }) {
 
-    const sobeParaOTopo = () => {
+    /*const sobeParaOTopo = () => {
         window.scrollTo(0, 0);
-    };
+    };*/
 
     return (
         <div>
             <div style={style}>
                 <center>
-                  • <Link to="/">Página inicial</Link>  • <Link onClick={() => sobeParaOTopo()}>Início da página</Link>
+                  • <Link to="/">Página inicial</Link>
                 </center>
                 <center>
                     &copy; {new Date().getFullYear()} Copyright: <a href="https://client-health-wellness.herokuapp.com/"> health-wellness.com</a>

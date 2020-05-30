@@ -118,7 +118,7 @@ export default function NovaConsulta (){
               </Col>
               <Col lg={4} md={12}>
               <br/>
-              <Form.Label className="required">Título consulta</Form.Label>
+              <Form.Label className="required">Título da consulta</Form.Label>
               <Form.Control type="text" name="titulo" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui o título da consulta"/>
               {errors.titulo && errors.titulo.type === "required" && <span className="alertField">Campo título é obrigatório</span>}

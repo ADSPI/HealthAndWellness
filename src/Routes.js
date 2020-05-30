@@ -14,6 +14,7 @@ import Home from './pages/home';
 import ErrorUrl from './pages/error';
 import novaConsulta from './pages/consulta/novaConsulta';
 import historicoConsulta from './pages/consulta/historicoConsulta';
+import editaConsulta from './pages/consulta/editaConsulta';
 import historicoExame from './pages/exame/historicoExame';
 import novoExame from './pages/exame/novoExame';
 import perfil from './pages/perfil';
@@ -47,6 +48,7 @@ class Routes extends Component{
           <Route exact path="/" component={Home}/>
           <Route exact path="/novaConsulta" component={novaConsulta}/>
           <Route exact path="/historicoConsulta" component={historicoConsulta}/>
+          <Route exact path="/consulta/:id" component={editaConsulta}/>
           <Route exact path="/historicoExame" component={historicoExame}/>
           <Route exact path="/novoExame" component={novoExame}/>
           <Route exact path="/imc" component={Imc}/>
