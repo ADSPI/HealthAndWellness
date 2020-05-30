@@ -1,5 +1,6 @@
 //import { CONFIG } from '../../config/cped';
 import firebase from './../../config/fireConnection';
+import dadosConsulta from './../dados_mockados/historicoConsulta';
 
 class ServiceConsulta{
 
@@ -10,8 +11,19 @@ class ServiceConsulta{
         consulta.diagnostico = data.diagnostico;
         consulta.medicacao = data.medicacao;
         consulta.id_medico = data.id_medico;
+        consulta.titulo = data.titulo;
         console.log(consulta);
     };
+
+    listaConsulta(){
+
+        return null;
+    }
+
+    listaConsultaMockado(){
+
+        return dadosConsulta.consultas();
+    }
 
     especialidade(){
         return [

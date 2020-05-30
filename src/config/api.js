@@ -1,4 +1,4 @@
-export const API = {   
+export const API = {
 
     SERVICE_BACKEND: {
         DOMAIN_SERVER: '',

@@ -5,7 +5,6 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import {Button} from 'primereact/button';
-import Loading from '../loading';
 import {Dropdown} from "primereact/dropdown";
 import {RadioButton} from 'primereact/radiobutton';
 
@@ -19,7 +18,6 @@ import './../../css/css_general.css';
 export default function NovaConsulta (){
   
   const { register, handleSubmit, errors } = useForm();
-  const [loading, setLoading] = useState(false);
   const [medicoCadastrado, setMedicoCadastrado] = useState(true);
   const [idMedico, setIdMedico] = useState("Informe seu CRM");
   const [id_espec, setId_espec] = useState("Informe sua especialidade");
@@ -70,8 +68,6 @@ export default function NovaConsulta (){
   return (
     <div>
       <Container>
-        {loading ?
-          <Loading/> :
           <div>
           <br/>
           <center>
@@ -120,6 +116,14 @@ export default function NovaConsulta (){
                   <label htmlFor="rb2" className="p-radiobutton-label">Não</label>
                 </div>
               </Col>
+              <Col lg={4} md={12}>
+              <br/>
+              <Form.Label className="required">Título consulta</Form.Label>
+              <Form.Control type="text" name="titulo" maxLength="50" ref={register({required:true, maxLength: 50})}
+               placeholder="Insira aqui o título da consulta"/>
+              {errors.titulo && errors.titulo.type === "required" && <span className="alertField">Campo título é obrigatório</span>}
+              {errors.titulo && errors.titulo.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
+            </Col>
             </Row>
           {!medicoCadastrado ?
             <div>
@@ -238,7 +242,6 @@ export default function NovaConsulta (){
           </form>
           <br/><br/><br/><br/><br/><br/>
           </div>
-          }
         </Container>
       </div>
   )
