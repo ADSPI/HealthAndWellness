@@ -20,7 +20,6 @@ export default function Imc() {
   const [ buttonVisible, setButtonVisible ] = useState(true);
 
   const habilitaButton = (e) => {
-    console.log(e.target.value);
     if(e.target.name === "peso") {
       setPeso(e.target.value);
     } else {
@@ -75,20 +74,25 @@ export default function Imc() {
           <br/><br/>
           <Row>
             <Col className="justify-content-md-center">
+              {showAlert?
+              <center>
+                <h3>{showStatus}</h3>
+              <br/><br/>
+              </center> 
+              : null}
+            </Col>
+          </Row>
+          <Row>
+            <Col className="justify-content-md-center">
               <center>
                 <Button label="Calcular" disabled={buttonVisible} className="p-button-danger" type="submit"/>
               </center>
+              <br/><br/><br/><br/><br/>
             </Col>
           </Row>
-       
         </form>
         <br/><br/>
-        {showAlert?
-          <center>
-            <h3>{showStatus}</h3>
-          <br/><br/><br/><br/><br/>
-          </center> 
-        : null}
+        
       </div>
     </Container>
   );
