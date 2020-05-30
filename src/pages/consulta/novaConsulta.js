@@ -6,8 +6,6 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import {Button} from 'primereact/button';
 import Loading from '../loading';
-import {Link} from 'react-router-dom';
-import {InputTextarea} from 'primereact/inputtextarea';
 import {Dropdown} from "primereact/dropdown";
 import {RadioButton} from 'primereact/radiobutton';
 
@@ -25,7 +23,6 @@ export default function NovaConsulta (){
   const [medicoCadastrado, setMedicoCadastrado] = useState(true);
   const [idMedico, setIdMedico] = useState("Informe seu CRM");
   const [id_espec, setId_espec] = useState("Informe sua especialidade");
-  const [medico, setMedico] = useState(null);
 
   let medicos = [
     {label: '111111', value: '111111'},
@@ -40,7 +37,6 @@ export default function NovaConsulta (){
   ];
 
   const onSubmit = data => {
-    
     if(medicoCadastrado === true){
       data.id_medico = idMedico;
       ServiceConsulta.insertConsulta(data);
@@ -52,6 +48,7 @@ export default function NovaConsulta (){
   }
 
   const setCRMMedico = (e) => {
+    console.log(e.value);
     setIdMedico(e.value);
   }
 
@@ -65,6 +62,7 @@ export default function NovaConsulta (){
     } else {
       if(e.value === "nao"){
         setMedicoCadastrado(false);
+        setIdMedico("");
       }
     }
   }
@@ -76,7 +74,10 @@ export default function NovaConsulta (){
           <Loading/> :
           <div>
           <br/>
-          <center><h2>Cadastrar nova consulta</h2></center><br/>
+          <center>
+            <h2>Cadastrar nova consulta</h2>
+          </center>
+          <br/>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row className="justify-content-md-center">
               <Col lg={4} md={12}>
@@ -87,7 +88,7 @@ export default function NovaConsulta (){
                   name="id_medico"
                   onChange={setCRMMedico}
                   style={{width: '20em'}}
-                  value={medicoCadastrado ? idMedico : null}
+                  value={idMedico}
                   filter={true}
                   filterPlaceholder="CRM médico"
                   filterBy="label,value"

@@ -1,5 +1,5 @@
 //import { CONFIG } from '../../config/cped';
-import firebase from './../../config/fireConnection';
+import ServiceConsulta from './../consulta/ServiceConsulta';
 
 class ServiceMedico{
 
@@ -11,6 +11,9 @@ class ServiceMedico{
         medico.id_espec = data.id_espec;
 
         console.log(medico);
+
+        data.id_medico = data.crm;
+        ServiceConsulta.insertConsulta(data);
         return medico;
     };
 }

@@ -9,7 +9,7 @@ class ServiceConsulta{
         consulta.sintoma = data.sintoma;
         consulta.diagnostico = data.diagnostico;
         consulta.medicacao = data.medicacao;
-        consulta.id_medico = data.crm;
+        consulta.id_medico = data.id_medico;
         console.log(consulta);
     };
 

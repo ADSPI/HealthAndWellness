@@ -1,0 +1,17 @@
+//CADASTRO CONSULTA
+[
+	id_paciente: "FtcVJSKh03TNfLavAhmGhWGhsnr1",
+	sintoma: "Sintomas aqui",
+	diagnostico: "Diagnostico aqui",
+	medicacao: "Medicacao aqui",
+	id_medico: "222222"
+]
+
+//CADASTRO MEDICO
+[
+	crm: "123456",
+	nome_med: "Lucas da Cruz",
+	contato_med: "(19)99383-2908",
+	id_espec: "16"
+]
+
