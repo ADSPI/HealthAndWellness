@@ -75,6 +75,10 @@ class Firebase{
     return app.auth().currentUser;
   }
 
+  getUID(){
+    return app.auth().currentUser.uid;
+  }
+
   getCurrent(){
     return app.auth().currentUser && app.auth().currentUser.email
   }
