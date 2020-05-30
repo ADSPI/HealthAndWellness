@@ -78,6 +78,14 @@ export default function NovaConsulta (){
             <Row className="justify-content-md-center">
               <Col lg={4} md={12}>
                 <br/>
+                <Form.Label className="required">Título da consulta</Form.Label>
+                <Form.Control type="text" name="titulo" maxLength="50" ref={register({required:true, maxLength: 50})}
+                placeholder="Insira aqui o título da consulta"/>
+                {errors.titulo && errors.titulo.type === "required" && <span className="alertField">Campo título é obrigatório</span>}
+                {errors.titulo && errors.titulo.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
+              </Col>
+              <Col lg={4} md={12}>
+                <br/>
                 <Form.Label>CRM do Médico</Form.Label><br/>
                 <Dropdown
                   options={medicos}
@@ -116,14 +124,6 @@ export default function NovaConsulta (){
                   <label htmlFor="rb2" className="p-radiobutton-label">Não</label>
                 </div>
               </Col>
-              <Col lg={4} md={12}>
-              <br/>
-              <Form.Label className="required">Título da consulta</Form.Label>
-              <Form.Control type="text" name="titulo" maxLength="50" ref={register({required:true, maxLength: 50})}
-               placeholder="Insira aqui o título da consulta"/>
-              {errors.titulo && errors.titulo.type === "required" && <span className="alertField">Campo título é obrigatório</span>}
-              {errors.titulo && errors.titulo.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
-            </Col>
             </Row>
           {!medicoCadastrado ?
             <div>

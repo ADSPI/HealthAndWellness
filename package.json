@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "firebase": "^7.10.0",
+    "http-proxy-middleware": "^1.0.4",
     "mdbreact": "^4.26.1",
     "primeicons": "^3.0.0-rc.1",
     "primereact": "^4.2.1",
