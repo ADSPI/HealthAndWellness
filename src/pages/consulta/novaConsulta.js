@@ -76,7 +76,7 @@ export default function NovaConsulta (){
           <br/>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row className="justify-content-md-center">
-              <Col lg={4} md={12}>
+              <Col lg={4} md={10}>
                 <br/>
                 <Form.Label className="required">Título da consulta</Form.Label>
                 <Form.Control type="text" name="titulo" maxLength="50" ref={register({required:true, maxLength: 50})}

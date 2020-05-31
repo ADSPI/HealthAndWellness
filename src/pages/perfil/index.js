@@ -10,6 +10,9 @@ import {Button} from 'primereact/button';
 import Loading from '../loading';
 import {Link} from 'react-router-dom';
 
+//SERVICE
+import ServicePaciente from './../../services/paciente/ServicePaciente';
+
 export default function Perfil() {
 
   const { register, handleSubmit, errors } = useForm();
@@ -19,7 +22,8 @@ export default function Perfil() {
 
   const onSubmit = data => {
     setLoading(true);
-    data.dataNascimento = dataNascimento;
+    data.data_nasc = dataNascimento;
+    ServicePaciente.updatePacienteBanco(data);
   };
 
   const convertDate = (str) => {
@@ -43,7 +47,7 @@ export default function Perfil() {
                 <Form.Label className="required">Nome completo</Form.Label>
                 <Form.Control 
                   type="text" 
-                  name="nome"
+                  name="nome_pac"
                   maxLength="50"
                   ref={register({required:true, maxLength: 50})}
                   placeholder="Insira aqui seu nome completo"
@@ -56,7 +60,7 @@ export default function Perfil() {
                 <Form.Label>Telefone</Form.Label><br/>
                 <Form.Control
                   type="text"
-                  name="telefone"
+                  name="contato_pac"
                   maxLength="14"
                   ref={register({maxLength: 14})}
                   placeholder="Insira aqui seu telefone (apenas números)"
@@ -83,7 +87,7 @@ export default function Perfil() {
                 <Form.Label  className="required">Email</Form.Label>
                 <Form.Control 
                   type="email"
-                  name="email"
+                  name="email_pac"
                   maxLength="50"
                   ref={register({required:true, maxLength: 50})}
                   placeholder="Insira aqui seu email"

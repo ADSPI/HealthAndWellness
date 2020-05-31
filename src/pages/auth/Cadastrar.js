@@ -8,11 +8,14 @@ import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
 import {Password} from 'primereact/password';
 import Loading from '../loading';
-import firebase from './../../config/fireConnection';
 import Validador from './../../services/util/validador';
 import {Link} from 'react-router-dom';
+import firebase from './../../config/fireConnection';
 
 import './../../css/css_general.css';
+
+//SERVICE
+import ServicePaciente from './../../services/paciente/ServicePaciente';
 
 export default function Cadastrar (){
   
@@ -53,10 +56,13 @@ export default function Cadastrar (){
 
   const onSubmit = data => {
     setLoading(true);
-    data.dataNascimento = dataNascimento;
-    console.log(data);
-    firebase.cadastrar(data.email, senha)
+    data.data_nasc = dataNascimento;
+    //ServicePaciente.insertPacienteBanco(data);
+
+    firebase.cadastrar(data.email_pac, senha)
     .then(retorno => {
+      console.log(retorno);
+      
       alert("Parabéns, você foi cadastrado com sucesso!");
       document.location.assign('/');
     })
@@ -73,10 +79,10 @@ export default function Cadastrar (){
         }
     })
   }
+
   return (
-    
     <div>
-        <Container>
+      <Container>
           {loading ?
           <Loading/> :
           <div>
@@ -87,7 +93,7 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label className="required">Nome completo</Form.Label>
-              <Form.Control type="text" name="nome" maxLength="50" ref={register({required:true, maxLength: 50})}
+              <Form.Control type="text" name="nome_pac" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui seu nome completo"/>
               {errors.nome && errors.nome.type === "required" && <span className="alertField">Campo nome é obrigatório</span>}
               {errors.nome && errors.nome.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
@@ -95,7 +101,7 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label>Telefone</Form.Label><br/>
-              <Form.Control type="text" name="telefone" maxLength="14" ref={register({maxLength: 14})}
+              <Form.Control type="text" name="contato_pac" maxLength="14" ref={register({maxLength: 14})}
                placeholder="Insira aqui seu ddd e telefone (apenas números)" onKeyUp={(e) => Validador.formatNumber(e)}/>
               {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números</span> }
             </Col>
@@ -110,7 +116,7 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label className="required">Email</Form.Label>
-              <Form.Control type="email" name="email" maxLength="50" ref={register({required:true, maxLength: 50})}
+              <Form.Control type="email" name="email_pac" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui seu email"/>
               {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é obrigatório</span>}
               {errors.email && errors.email.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }

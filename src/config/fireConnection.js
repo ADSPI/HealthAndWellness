@@ -25,6 +25,7 @@ class Firebase{
   }
 
   login(email, password){
+
     return app.auth().signInWithEmailAndPassword(email, password)
   }
 
@@ -73,6 +74,14 @@ class Firebase{
 
   getUser(){
     return app.auth().currentUser;
+  }
+
+  getAccessToken(){
+    return app.auth().currentUser.b.b;
+  }
+
+  getRefreshToken(){
+    return app.auth().currentUser.b.a;
   }
 
   getUID(){

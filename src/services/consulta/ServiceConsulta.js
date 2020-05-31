@@ -1,39 +1,65 @@
-//import { CONFIG } from '../../config/cped';
+import { API } from './../../config/api';
 import firebase from './../../config/fireConnection';
 import dadosConsulta from './../dados_mockados/historicoConsulta';
 
 class ServiceConsulta{
 
     insertConsulta(data){
-        let consulta = [];
-        consulta.id_paciente = firebase.getUID().toString();
-        consulta.sintoma = data.sintoma;
-        consulta.diagnostico = data.diagnostico;
-        consulta.medicacao = data.medicacao;
-        consulta.id_medico = data.id_medico;
-        consulta.titulo = data.titulo;
-        console.log(consulta);
+        var refreshToken = firebase.getRefreshToken();
+        var accessToken = firebase.getAccessToken();
+
+        return fetch(API.SERVICE_BACKEND.INSERE_CONSULTA, {
+            method: 'POST',
+            headers: {
+              'refreshToken': refreshToken,
+              'accessToken': accessToken,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+          });
     };
 
     atualizaConsulta(data){
-        let consulta = [];
-        consulta.id_paciente = firebase.getUID().toString();
-        consulta.sintoma = data.sintoma;
-        consulta.diagnostico = data.diagnostico;
-        consulta.medicacao = data.medicacao;
-        consulta.id_medico = data.id_medico;
-        consulta.titulo = data.titulo;
-        console.log(consulta);
+        var refreshToken = firebase.getRefreshToken();
+        var accessToken = firebase.getAccessToken();
+        
+        return fetch(API.SERVICE_BACKEND.ATUALIZA_CONSULTA, {
+            method: 'PUT',
+            headers: {
+              'refreshToken': refreshToken,
+              'accessToken': accessToken,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
     };
 
     listaConsulta(){
+        var refreshToken = firebase.getRefreshToken();
+        var accessToken = firebase.getAccessToken();
 
-        return null;
+        return fetch(API.SERVICE_BACKEND.LISTA_CONSULTA, {
+            method: 'GET',
+            headers: {
+              'refreshToken': refreshToken,
+              'accessToken': accessToken,
+              'Content-Type': 'application/json'
+            }
+        });
     }
 
-    getConsulta(id_consulta){
-
-        return null;
+    buscaConsulta(id_consulta){
+        var refreshToken = firebase.getRefreshToken();
+        var accessToken = firebase.getAccessToken();
+        
+        return fetch(`${API.SERVICE_BACKEND.BUSCA_CONSULTA + id_consulta}` , {
+            method: 'GET',
+            headers: {
+              'refreshToken': refreshToken,
+              'accessToken': accessToken,
+              'Content-Type': 'application/json'
+            }
+        });
     }
 
     listaConsultaMockado(){
