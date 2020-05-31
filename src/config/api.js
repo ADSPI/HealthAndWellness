@@ -5,7 +5,7 @@ export const API = {
 
         INSERE_PACIENTE : '/crud/retorna_registro_billing',
         ATUALIZA_PACIENTE : '/crud/retorna_duplicadas_em_faturados',
-        DELETE_PACIENTE : '/crud/retorna_duplicadas_em_faturados',
+        DELETA_PACIENTE : '/crud/retorna_duplicadas_em_faturados',
 
         INSERE_MEDICO : '/crud/retorna_duplicadas_em_faturados',
 
@@ -17,7 +17,8 @@ export const API = {
 
         INSERE_EXAME : '/crud/retorna_duplicadas_em_faturados',
         ATUALIZA_EXAME : '/crud/retorna_duplicadas_em_faturados',
-        EDITA_EXAME : '/crud/retorna_duplicadas_em_faturados',
+        LISTA_EXAME : '/crud/retorna_duplicadas_em_faturados',
+        BUSCA_EXAME : '/crud/retorna_duplicadas_em_faturados',
         DELETA_EXAME : '/crud/retorna_duplicadas_em_faturados'
     },
 	

@@ -49,14 +49,13 @@ export default function HistoricoConsulta (){
               </center>
               <br/>
             <div>
-            
-                <DataTable ref={dt} value={consulta} paginator={true} rows={10} header={header}
-                    globalFilter={globalFilter} emptyMessage="Nenhuma consulta encontrada">
-                    <Column field="id_consulta" header="ID" sortable filter={true} filterPlaceholder="ID da consulta" style={{textAlign:'center', width: '6em'}}/>
-                    <Column field="titulo" header="Título" sortable filter={true} filterPlaceholder="Título da consulta"/>
-                    <Column field="data" header="Data" sortable filter={true} filterPlaceholder="Data da consulta"/>
-                    <Column header="+" body={visualizarConsulta} style={{textAlign:'center', width: '4em'}}/>
-                </DataTable>
+              <DataTable ref={dt} value={consulta} paginator={true} rows={10} header={header}
+                globalFilter={globalFilter} emptyMessage="Nenhuma consulta encontrada">
+                  <Column field="id_consulta" header="ID" sortable filter={true} filterPlaceholder="ID da consulta" style={{textAlign:'center', width: '6em'}}/>
+                  <Column field="titulo" header="Título" sortable filter={true} filterPlaceholder="Título da consulta"/>
+                  <Column field="data" header="Data" sortable filter={true} filterPlaceholder="Data da consulta"/>
+                  <Column header="+" body={visualizarConsulta} style={{textAlign:'center', width: '4em'}}/>
+              </DataTable>
             </div>
             <br/><br/><br/><br/><br/><br/>
           </div>}

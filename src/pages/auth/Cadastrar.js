@@ -156,7 +156,7 @@ export default function Cadastrar (){
               </Col>
             </Row>
           </form>
-          <br/><br/><br/>
+          <br/><br/><br/><br/><br/>
           </div>
           }
         </Container>

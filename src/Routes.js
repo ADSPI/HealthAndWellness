@@ -17,6 +17,7 @@ import historicoConsulta from './pages/consulta/historicoConsulta';
 import editaConsulta from './pages/consulta/editaConsulta';
 import historicoExame from './pages/exame/historicoExame';
 import novoExame from './pages/exame/novoExame';
+import editaExame from './pages/exame/editaExame';
 import perfil from './pages/perfil';
 import resetSenha from './pages/resetSenha';
 import Imc from './pages/imc';
@@ -51,6 +52,7 @@ class Routes extends Component{
           <Route exact path="/consulta/:id" component={editaConsulta}/>
           <Route exact path="/historicoExame" component={historicoExame}/>
           <Route exact path="/novoExame" component={novoExame}/>
+          <Route exact path="/exame/:id" component={editaExame}/>
           <Route exact path="/imc" component={Imc}/>
           <Route exact path="/perfil" component={perfil}/>
           <Route exact path="/resetSenha" component={resetSenha}/>

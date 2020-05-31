@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {FileUpload} from 'primereact/fileupload';
 import {Button} from 'primereact/button';
 import Form from 'react-bootstrap/Form';
@@ -6,12 +6,31 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import useForm from "react-hook-form";
+import Loading from '../loading';
+import {Link} from 'react-router-dom';
+
+//SERVICE
+import ServiceExame from './../../services/exame/ServiceExame';
 
 import './../../css/css_general.css';
 
 export default function NovoExame() {
 
   const { register, handleSubmit, errors } = useForm();
+  const [stateEdit, setStateEdit] = useState(true);
+  const [exame, setExame] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    var url = window.location.pathname;
+    var idExame = url.split("/")[2];
+   
+    setExame(ServiceExame.getExameMockado(idExame));
+    setLoading(false);
+  }, []);
+
 
   const onSubmit = data => {
     console.log(data);
@@ -21,9 +40,15 @@ export default function NovoExame() {
     console.log("Arquivo subido");
   }
 
+  const changeStateEdit = (state) => {
+    setStateEdit(state);
+  }
+
     return (
             <div>
               <Container>
+                {loading ?
+                <Loading/> :
               <div>
                 <br/>
                 <center>
@@ -39,8 +64,10 @@ export default function NovoExame() {
                         type="text"
                         name="nome_exame"
                         maxLength="50"
+                        value={exame.nome_exame}
                         ref={register({required:true, maxLength: 50})}
                         placeholder="Insira aqui o título da consulta"
+                        disabled={stateEdit}
                       />
                       {errors.nome_exame && errors.nome_exame.type === "required" && <span className="alertField">Campo nome exame é obrigatório</span>}
                       {errors.nome_exame && errors.nome_exame.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
@@ -52,8 +79,10 @@ export default function NovoExame() {
                         type="text"
                         name="id_consulta"
                         maxLength="50"
+                        value={exame.id_consulta}
                         ref={register({maxLength: 50})}
                         placeholder="Insira aqui o ID da consulta"
+                        disabled={stateEdit}
                       />
                       {errors.id_consulta && errors.id_consulta.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
                     </Col>
@@ -68,20 +97,48 @@ export default function NovoExame() {
                         accept="image/*"
                         maxFileSize={1000000}
                         onUpload={onBasicUpload}
+                        disabled={stateEdit}
                       />
                     </Col>
                   </Row>
-                  <Row lg={6} className="justify-content-md-center">
-                    <Col>
-                      <br/><br/><br/>
-                      <center>
-                        <Button label="Cadastrar exame" size="45" className="p-button-danger" type="submit"/>
-                      </center>
-                    </Col>
-                  </Row>
+                {stateEdit ?
+                    <Row lg={6} className="justify-content-md-center">
+                        <Col>
+                        <br/><br/><br/>
+                            <center>
+                            <Link to='/historicoExame'>
+                                <Button label="Voltar" className="p-button-secondary"/>
+                            </Link>
+                            </center>
+                        </Col>
+                        <Col className="justify-content-md-center">
+                            <br/><br/><br/>
+                            <center>
+                            <Button label="Editar" onClick={() => changeStateEdit(false)}  type="" className="p-button-danger"/>
+                            </center>
+                            <br/><br/><br/>
+                        </Col>
+                    </Row> :
+                    <Row lg={6} className="justify-content-md-center">
+                        <Col>
+                            <br/><br/><br/>
+                            <center>
+                                <Link to='/historicoExame'>
+                                    <Button label="Voltar" className="p-button-secondary"/>
+                                </Link>
+                            </center>
+                        </Col>
+                        <Col>
+                            <br/><br/><br/>
+                            <center>
+                                <Button label="Atualizar" className="p-button-danger" title="Submit" onPress={handleSubmit(onSubmit)} type="submit"/>
+                            </center>
+                        </Col>
+                    </Row>
+                }
                 </form>
                 <br/><br/><br/><br/><br/>
-              </div>
+              </div>}
               </Container>
             </div>
       )
