@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import logo from './../../img/logo.png';
+import medico_na_consulta from './../../img/medico_na_consulta.jpg';
+
 import {Messages} from 'primereact/messages';
 
 import './Logar.css';
@@ -226,12 +228,35 @@ class Logar extends Component{
                 <img src={logo} alt="Logo da Health and Wellness" style={{width:'70%'}}/>
               </center>
               <p>Crie seu <Link to="/cadastro">cadastro</Link> e experimente a independência do seu prontuário na palma da sua mão.</p>
-              <br/><br/><br/><br/>
+              <br/>
             </Col>
             <br/>
           </Row>
+          <Row >
+            <Col lg={4} md={12}>
+              <center>
+                <h2>Como funciona?</h2>
+              </center>
+              <br/>
+              <p>O uso do sistema é simples, quando o paciente comparecer em alguma consulta médica, basta ele gerar e conceder um token de
+                 acesso ao médico da consulta, o médico por si só poderá visualizar o histórico de saúde do paciente, informações como exames salvos e
+                 consultas registras estarão de fácil acesso, o médico também poderá inserir dados relacionados aos atuais sintomas, diagnósticos e
+                 medicações referente a análise feita.
+              </p>
+            </Col>
+            <Col lg={8} md={12}>
+              <center>
+                <img 
+                  src={medico_na_consulta}
+                  alt="Mesa de um consultório com médico e paciente apertando a mão um do outro" 
+                  style={{width:'100%'}}
+                />
+              </center><br/>
+              <p></p>
+            </Col>
+            </Row>
           </section>
-          
+          <br/><br/><br/><br/>
           </Container>        
       </div>
     );
