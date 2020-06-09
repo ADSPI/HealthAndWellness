@@ -17,7 +17,7 @@ import './../../css/css_general.css';
 //SERVICE
 import ServicePaciente from './../../services/paciente/ServicePaciente';
 
-export default function Cadastrar (){
+export default function Cadastrar (){ 
   
   const { register, handleSubmit, errors } = useForm();
   const [ loading, setLoading ] = useState(false);
@@ -57,9 +57,14 @@ export default function Cadastrar (){
   const onSubmit = data => {
     setLoading(true);
     data.data_nasc = dataNascimento;
-    //ServicePaciente.insertPacienteBanco(data);
+    data.senha = senha;
+    ServicePaciente.insertPacienteBanco(data).then(
+      response => console.log(response))
+    .catch((erro) => {
+      console.log(erro);
+    });
 
-    firebase.cadastrar(data.email_pac, senha)
+    /*firebase.cadastrar(data.email_pac, senha)
     .then(retorno => {
       console.log(retorno);
       
@@ -77,7 +82,7 @@ export default function Cadastrar (){
             alert("Ops, algum erro em seu cadastro: " + error.code)
           }
         }
-    })
+    })*/
   }
 
   return (

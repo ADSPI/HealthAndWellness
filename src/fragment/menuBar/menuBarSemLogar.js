@@ -2,7 +2,7 @@ import React from 'react';
 import {Menubar} from 'primereact/menubar';
 import { useHistory } from "react-router-dom";
 
-export default function MenuBar() {
+export default function MenuBarSemLogar() {
   const history = useHistory();
 
    const handleOnClick = (e) => {
@@ -57,19 +57,7 @@ export default function MenuBar() {
       icon:'pi pi-fw pi-heart',
       path:"/imc",
       command:(e)=> handleOnClick(e)
-   },
-   {
-      label:'Perfil',
-      icon:'pi pi-fw pi-user',
-      path:"/perfil",
-      command:(e)=> handleOnClick(e)
-   },
-   {
-      label:'Gerar token',
-      icon:'pi pi-fw pi-share-alt',
-      path:"/generateToken",
-      command:(e)=> handleOnClick(e)
-   },
+    },
  ]
 
   return (

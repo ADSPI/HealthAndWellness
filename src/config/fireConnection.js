@@ -25,28 +25,30 @@ class Firebase{
   }
 
   login(email, password){
-
-    return app.auth().signInWithEmailAndPassword(email, password)
+    return app.auth().signInWithEmailAndPassword(email, password);
   }
 
   logout(){
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken');
     return app.auth().signOut();
+  }
+
+  getTokenCreateCustomToken(uid){
+    console.log(app.auth().currentUser.uid);
+    app.auth().createCustomToken(uid)
+    .then(function(customToken) {
+      console.log(customToken)
+      // Send token back to client
+    })
+    .catch(function(error) {
+      console.log('Error creating custom token:', error);
+    });
   }
 
   cadastrar(email, password){
       return app.auth().createUserWithEmailAndPassword(email, password);
     }   
-
-  /*async register(nome, email, password){
-    await app.auth().createUserWithEmailAndPassword(email, password)
-
-    const uid = app.auth().currentUser.uid;
-
-    return app.database().ref('usuarios').child(uid).set({
-      nome: nome
-    })
-
-  }*/
 
   isInitialized(){
       return new Promise(resolve =>{

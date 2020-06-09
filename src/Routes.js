@@ -3,6 +3,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import firebase from './config/fireConnection';
 //FRAGMENT
 import MenuBar from './fragment/menuBar';
+import MenuBarSemLogar from './fragment/menuBar/menuBarSemLogar';
 import Header from './fragment/header';
 import HeaderSemLogar from './fragment/header/HeaderSemLogar';
 import Footer from './fragment/footer';
@@ -21,6 +22,8 @@ import editaExame from './pages/exame/editaExame';
 import perfil from './pages/perfil';
 import resetSenha from './pages/resetSenha';
 import Imc from './pages/imc';
+import GenerateToken from './pages/generate_token';
+import getToken from './pages/getToken';
 import Loading from './pages/loading';
 
 class Routes extends Component{
@@ -56,6 +59,7 @@ class Routes extends Component{
           <Route exact path="/imc" component={Imc}/>
           <Route exact path="/perfil" component={perfil}/>
           <Route exact path="/resetSenha" component={resetSenha}/>
+          <Route exact path="/generateToken" component={GenerateToken}/>
           <Route path="*" component={ErrorUrl}/>
         </Switch>
         }
@@ -65,14 +69,29 @@ class Routes extends Component{
     ) : (
           <BrowserRouter>
           <HeaderSemLogar/>
-          {this.state.firebaseInitialized == null ?
-          <Loading/>
-          : 
-          <Switch>
+          {
+          localStorage.getItem('accessToken') && localStorage.getItem('accessToken') ?
+          //  1 !== 1 ?
+          <div>
+            <MenuBarSemLogar/>
+            <Switch>
+              <Route exact path="/token" component={Home}/>
+              <Route exact path="/token/:accessToken/:refreshToken" component={getToken} />
+            </Switch>
+          </div>
+            :
+          <div>
+            {this.state.firebaseInitialized == null ?
+            <Loading/>
+            : 
+            <Switch>
               <Route exact path="/cadastro" component={Cadastrar} />
+              <Route exact path="/token/:accessToken/:refreshToken" component={getToken} />
               <Route exact path="/" component={Logar} />
               <Route path="*" component={Logar}/>
             </Switch>
+            }
+          </div>
           }
           <Footer/>
           </BrowserRouter>

@@ -3,7 +3,7 @@ export const API = {
     SERVICE_BACKEND: {
         DOMAIN_SERVER: '',
 
-        INSERE_PACIENTE : '/crud/retorna_registro_billing',
+        INSERE_PACIENTE : '/api/inserUser',
         ATUALIZA_PACIENTE : '/crud/retorna_duplicadas_em_faturados',
         DELETA_PACIENTE : '/crud/retorna_duplicadas_em_faturados',
 
