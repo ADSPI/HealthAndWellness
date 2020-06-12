@@ -56,33 +56,23 @@ export default function Cadastrar (){
 
   const onSubmit = data => {
     setLoading(true);
-    data.data_nasc = dataNascimento;
-    data.senha = senha;
-    ServicePaciente.insertPacienteBanco(data).then(
-      response => console.log(response))
-    .catch((erro) => {
-      console.log(erro);
-    });
-
-    /*firebase.cadastrar(data.email_pac, senha)
-    .then(retorno => {
-      console.log(retorno);
-      
+    data.birth_date = dataNascimento;
+    data.password = senha;
+    ServicePaciente.insertPacienteBanco(data).then( retorno => {
       alert("Parabéns, você foi cadastrado com sucesso!");
       document.location.assign('/');
-    })
-    .catch((error) => {
-      
-        if(error.code === "auth/invalid-email"){
-          alert('Email em formato inválido.');
+    }).catch(error => {
+      console.log(error);
+      if(error.code === "auth/invalid-email"){
+        alert('Email em formato inválido.');
+      } else {
+        if(error.code === "auth/weak-password"){
+        alert("Senha fraca, tamanho mínimo de 6 caracteres.");
         } else {
-          if(error.code === "auth/weak-password"){
-          alert("Senha fraca, tamanho mínimo de 6 caracteres.");
-          } else {
-            alert("Ops, algum erro em seu cadastro: " + error.code)
-          }
+          alert("Ops, algum erro em seu cadastro: " + error.code)
         }
-    })*/
+    }
+    });
   }
 
   return (
@@ -98,7 +88,7 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label className="required">Nome completo</Form.Label>
-              <Form.Control type="text" name="nome_pac" maxLength="50" ref={register({required:true, maxLength: 50})}
+              <Form.Control type="text" name="name" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui seu nome completo"/>
               {errors.nome && errors.nome.type === "required" && <span className="alertField">Campo nome é obrigatório</span>}
               {errors.nome && errors.nome.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
@@ -106,7 +96,7 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label>Telefone</Form.Label><br/>
-              <Form.Control type="text" name="contato_pac" maxLength="14" ref={register({maxLength: 14})}
+              <Form.Control type="text" name="contact" maxLength="14" ref={register({maxLength: 14})}
                placeholder="Insira aqui seu ddd e telefone (apenas números)" onKeyUp={(e) => Validador.formatNumber(e)}/>
               {errors.telefone && errors.telefone.type === "maxLength" && <span className="alertField">O tamanho máximo é de 11 números</span> }
             </Col>
@@ -121,7 +111,7 @@ export default function Cadastrar (){
             <Col lg={4} md={10}>
               <br/>
               <Form.Label className="required">Email</Form.Label>
-              <Form.Control type="email" name="email_pac" maxLength="50" ref={register({required:true, maxLength: 50})}
+              <Form.Control type="email" name="email" maxLength="50" ref={register({required:true, maxLength: 50})}
                placeholder="Insira aqui seu email"/>
               {errors.email && errors.email.type === "required" && <span className="alertField">Campo email é obrigatório</span>}
               {errors.email && errors.email.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }

@@ -1,25 +1,23 @@
 import { API } from './../../config/api';
 import firebase from './../../config/fireConnection';
+import axios from 'axios';
 
 class ServicePaciente{
 
     insertPacienteBanco(data){
-        //let paciente = [];
-        var paciente = {
-            name: data.nome_pac,
-            contact: data.nome_pac,
-            email: data.email_pac,
-            birth_date: data.data_nasc,
-            password: data.senha
-        };
-        console.log(paciente);
-        //API.SERVICE_BACKEND.INSERE_PACIENTE 
-        return fetch('https://api-health-wellness.herokuapp.com/hw/patient-auth', {
+        var patient = new Object();
+        patient.name = data.name;
+        patient.contact = data.contact;
+        patient.email = data.email;
+        patient.birth_date = data.birth_date;
+        patient.password = data.password;
+
+        return fetch('/hw/patient-auth', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
-            body: paciente,
+            body: JSON.stringify(patient),
         });
     };
 
