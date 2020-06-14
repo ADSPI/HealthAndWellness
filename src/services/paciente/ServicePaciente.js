@@ -12,7 +12,8 @@ class ServicePaciente{
         patient.birth_date = data.birth_date;
         patient.password = data.password;
 
-        return fetch('/hw/patient-auth', {
+        //return fetch('/hw/patient-auth', {
+        return fetch('https://api-health-wellness.herokuapp.com/hw/patient-auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
