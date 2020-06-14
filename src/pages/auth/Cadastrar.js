@@ -59,6 +59,7 @@ export default function Cadastrar (){
     data.birth_date = dataNascimento;
     data.password = senha;
     ServicePaciente.insertPacienteBanco(data).then( retorno => {
+      console.log("Requisição feita...")
       alert("Parabéns, você foi cadastrado com sucesso!");
       document.location.assign('/');
     }).catch(error => {
