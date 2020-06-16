@@ -64,6 +64,7 @@ class Logar extends Component{
     const {email, password} = this.state;
 
       await firebase.login(email, password).then(() => {
+        localStorage.setItem('access', 'user');
         localStorage.setItem('accessToken', firebase.getAccessToken());
         localStorage.setItem('refreshToken', firebase.getRefreshToken());
         /*

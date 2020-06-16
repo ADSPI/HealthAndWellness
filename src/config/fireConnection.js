@@ -34,6 +34,10 @@ class Firebase{
     return app.auth().signOut();
   }
 
+  signInWithCustomToken(token){
+    return app.auth().signInWithCustomToken(token);
+  }
+
   getTokenCreateCustomToken(uid){
     console.log(app.auth().currentUser.uid);
     app.auth().createCustomToken(uid)

@@ -10,7 +10,6 @@ import {Password} from 'primereact/password';
 import Loading from '../loading';
 import Validador from './../../services/util/validador';
 import {Link} from 'react-router-dom';
-import firebase from './../../config/fireConnection';
 
 import './../../css/css_general.css';
 
