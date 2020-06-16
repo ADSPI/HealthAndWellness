@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Loading from './../loading';
 import firebase from './../../config/fireConnection';
+import ErrorUrlTokenInvalido from './../../pages/error/errorTokenInvalido';
 
 export default function GenerateToken() {
-  
+  const [ erro, setErro ] = useState(false);
+
   useEffect(() => {
     var url = window.location.pathname;
     var token = url.split("/")[2];
@@ -16,7 +18,7 @@ export default function GenerateToken() {
       document.location.assign('/');
     })
     .catch(function(error) {
-      // Handle Errors here.
+      setErro(true);
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode + errorMessage);
@@ -26,6 +28,12 @@ export default function GenerateToken() {
   });
 
   return (
-    <Loading/>
+    <div>
+      {erro ?
+        <ErrorUrlTokenInvalido/>
+          :
+        <Loading/>
+      }
+    </div>
   );
 }
