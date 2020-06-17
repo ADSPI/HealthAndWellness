@@ -1,6 +1,3 @@
-import { API } from './../../config/api';
-import firebase from './../../config/fireConnection';
-
 class ServicePaciente{
 
     insertPacienteBanco(data){
@@ -11,14 +8,6 @@ class ServicePaciente{
             birth_date : data.birth_date,
             password : data.password,
         }
-        /*var patient = new Object();
-        patient.name = data.name;
-        patient.contact = data.contact;
-        patient.email = data.email;
-        patient.birth_date = data.birth_date;
-        patient.password = data.password;*/
-
-        //return fetch('/hw/patient-auth', {
         return fetch('https://api-health-wellness.herokuapp.com/hw/patient-auth', {
             method: 'POST',
             headers: {
@@ -28,18 +17,32 @@ class ServicePaciente{
         });
     };
 
-    updatePacienteBanco(data){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
-
-        return fetch(API.SERVICE_BACKEND.ATUALIZA_PACIENTE, {
-            method: 'POST',
+    getPaciente(){
+        return fetch('https://api-health-wellness.herokuapp.com/hw/patient', {
+            method: 'GET',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+                'Content-Type': 'application/json',
+                'access-token' :  localStorage.getItem('accessToken').toString(),
+                'refresh-token' : localStorage.getItem('refreshToken').toString()
+            }
+        });
+    };
+
+    updatePacienteBanco(data, idPatient){
+        var patient = {
+            name :  data.name,
+            contact : data.contact,
+            email : data.email,
+            birth_date : data.birth_date,
+        }
+        return fetch(`${'https://api-health-wellness.herokuapp.com/hw/patient/' + idPatient}`, {
+            method: 'PUT',
+            headers: {
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(patient),
         });
     };
 

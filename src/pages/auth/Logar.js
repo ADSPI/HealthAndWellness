@@ -67,10 +67,7 @@ class Logar extends Component{
         localStorage.setItem('access', 'user');
         localStorage.setItem('accessToken', firebase.getAccessToken());
         localStorage.setItem('refreshToken', firebase.getRefreshToken());
-        /*
-        localStorage.getItem('accessToken');
-        localStorage.getItem('refreshToken');
-        */
+
         document.location.assign('/');
       })
       .catch((error)=>{
