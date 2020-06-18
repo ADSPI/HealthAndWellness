@@ -244,8 +244,8 @@ class Logar extends Component{
               <br/>
               <p>O uso do sistema é simples, quando o paciente comparecer em alguma consulta médica, basta ele gerar e conceder um token de
                  acesso ao médico da consulta, o médico por si só poderá visualizar o histórico de saúde do paciente, informações como exames salvos e
-                 consultas registras estarão de fácil acesso, o médico também poderá inserir dados relacionados aos atuais sintomas, diagnósticos e
-                 medicações referente a análise feita.
+                 consultas registradas estarão de fácil acesso, o médico também poderá inserir dados relacionados aos atuais sintomas, diagnósticos e
+                 medicações referente a análise feita em você.
               </p>
             </Col>
             <Col lg={8} md={12}>

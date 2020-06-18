@@ -4,8 +4,23 @@ import exame from './../dados_mockados/exame';
 
 class ServiceExame{
 
-    insertExame(data){
-        var refreshToken = firebase.getRefreshToken();
+    insertExame(doc){
+        let uid = firebase.getUID();
+        const uploadTasks = firebase.storage.ref(`exames/${uid}/${doc.name}`).put(doc);
+        return "url";
+        /*await uploadTasks.on('state_changed',
+        (snapshot)=> {
+            //progress
+        },
+        (error) => {
+            //Error
+            console.log('Error imagem' + error);
+        },
+        () => {
+            //sucess
+        })*/
+        //firebase.storage
+        /*var refreshToken = firebase.getRefreshToken();
         var accessToken = firebase.getAccessToken();
 
         return fetch(API.SERVICE_BACKEND.INSERE_EXAME, {
@@ -16,7 +31,7 @@ class ServiceExame{
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
-        });
+        });*/
     };
 
     atualizaExame(data){
