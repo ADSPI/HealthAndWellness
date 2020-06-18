@@ -24,6 +24,7 @@ import perfil from './pages/perfil';
 import resetSenha from './pages/resetSenha';
 import Imc from './pages/imc';
 import GenerateToken from './pages/generate_token';
+import GenerateQrCode from './pages/generate_token/generateQrCode';
 import getToken from './pages/getToken';
 import Loading from './pages/loading';
 
@@ -82,8 +83,10 @@ class Routes extends Component{
                 <Route exact path="/perfil" component={perfil}/>
                 <Route exact path="/resetSenha" component={resetSenha}/>
                 <Route exact path="/generateToken" component={GenerateToken}/>
+                <Route exact path="/token/generate" component={GenerateQrCode}/>
                 <Route exact path="/getToken" component={ErrorUrlToken}/>
                 <Route exact path="/getToken/:token" component={ErrorUrlToken}/>
+                GenerateQrCode
                 <Route path="*" component={ErrorUrl}/>
               </Switch>
             </div>

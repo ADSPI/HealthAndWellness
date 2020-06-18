@@ -23,8 +23,6 @@ export default function GenerateToken() {
       var errorMessage = error.message;
       console.log(errorCode + errorMessage);
     });
-
-    
   });
 
   return (

@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import {Button} from 'primereact/button';
-import Form from 'react-bootstrap/Form';
 import ServiceToken from './../../services/token/ServiceToken';
 
 export default function GenerateToken() {
-
-  const [ showToken, setshowToken ] = useState(false);
-  const [ customToken, setCustomToken ] = useState();
-  const [ labelCopiar, setLabelCopiar ] = useState("Copiar token");
 
   const setCustomTokenUser = (response) => {
     var url = window.location.href;
@@ -18,8 +13,9 @@ export default function GenerateToken() {
     url = url + "/getToken/";
 
     response.json().then(data => {
-      setCustomToken(url + data.data.custom_token);
-      setshowToken(true);
+      var tokenUrl = url + data.data.custom_token;
+      localStorage.setItem('tokenAccess', tokenUrl);
+      document.location.assign('/token/generate');
     }).catch((erro) => {
       console.log(erro);
     });
@@ -32,63 +28,32 @@ export default function GenerateToken() {
     });
   }
 
-  const copyToClipboard = () => {
-    var textField = document.createElement('textarea');
-    textField.innerText = customToken;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand('copy');
-    setLabelCopiar("Token copiado");
-  };
-
   return (
-    <div>
       <Container>
         <br/>
         <center><h2>Geração de token para consulta</h2></center><br/><br/>
-        {showToken?
-        <Row className="justify-content-md-center">
-            <Col lg={10} md={10}>
-              <div>
-                <Form.Control
-                  as="textarea"
-                  rows="12"
-                  cols="30"
-                  name="token"
-                  value={customToken}
-                  disabled={true}
-                />
-                 <span className="alertField">O token é válido nos próximos 60 minutos.</span>
-              <br/><br/><br/>
-              <center>
-                <Button 
-                label={labelCopiar}
-                size="45"
-                type="submit"
-                onClick={() => copyToClipboard()}
-                />
-              </center>
-              </div> 
-              
-            </Col>
+        <Row>
+          <h2>Como funciona o token?</h2>
+          <p>Ao gerar o token será disponibilizado um QRToken e uma URL para que assim 
+            o seu médico possa visualizar seu histórico de consultas e
+            exames. O token gerado terá uma duração de 60 minutos de disponibilidade de acesso.
+          </p>
         </Row>
-        : 
+        <br/><br/><br/>
         <Row lg={6} className="justify-content-md-center">
           <Col md={10}>
             <center>
-                <Button 
-                label="Gerar token"
-                className="p-button-danger"
-                size="45"
-                type="submit"
-                onClick={() => getToken()}
-                />
+              <Button 
+              label="Gerar token"
+              className="p-button-danger"
+              size="45"
+              type="submit"
+              onClick={() => getToken()}
+              />
             </center>
           </Col>
         </Row>
-        }
         <br/><br/><br/><br/><br/><br/><br/>
       </Container>
-    </div>
   );
 }
