@@ -22,11 +22,9 @@ export default function NovoExame() {
 
   const onSubmit = async (data) => {
     data.data_exame = dataExame;
-    //await insertExame(exameDoc);
     data.url = urlExame;
     ServiceExame.insertExame(data).then(retorno => {
-      alert("Parabéns!");
-      //document.location.assign('/');
+      alert("Exame cadastrado com sucesso!");
     }).catch(error => {
       console.log(error);
     });

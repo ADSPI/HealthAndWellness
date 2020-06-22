@@ -1,7 +1,6 @@
 import { API } from './../../config/api';
 import firebase from './../../config/fireConnection';
 import exame from './../dados_mockados/exame';
-import { getAllByPlaceholderText } from '@testing-library/react';
 
 class ServiceExame{
 
@@ -42,36 +41,32 @@ class ServiceExame{
             body: JSON.stringify(data),
         });
     };
-
+    
     listaExame(){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
-
-        return fetch(API.SERVICE_BACKEND.LISTA_EXAME, {
+        return fetch('https://api-health-wellness.herokuapp.com/hw/exam', {
             method: 'GET',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             }
         });
+        
     }
 
-    buscaExame(id_exame){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
-        
-        return fetch(`${API.SERVICE_BACKEND.BUSCA_EXAME + id_exame}` , {
+    getExame(idExame){
+        return fetch(`${'https://api-health-wellness.herokuapp.com/hw/exam/' + idExame}`, {
             method: 'GET',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             }
         });
     }
 
     listaExameMockado(){
+        console.log(exame.exames());
         return exame.exames();
     }
 

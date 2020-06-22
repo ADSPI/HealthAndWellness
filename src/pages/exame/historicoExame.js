@@ -18,8 +18,21 @@ export default function HistoricoExame (){
 
     useEffect(() => {
       setLoading(true);
-      setExame(ServiceExame.listaExameMockado());
-      setLoading(false);
+      ServiceExame.listaExame().then(response => {
+        response.json().then(data => {
+          setExame(data.data);
+        }).catch((erro) => {
+          console.log(erro);
+        })
+      })
+      .catch((erro) => {
+        console.log(erro);
+      });
+
+      window.setTimeout(function() {
+        setLoading(false);
+    }, 1500);
+
     }, []);
 
     const header = (
@@ -31,7 +44,7 @@ export default function HistoricoExame (){
 
     const visualizarExame = (rowData, column) => {
       return <div>
-        <Link to={'/exame/' + rowData.id_exame}>
+        <Link to={'/exame/' + rowData.id}>
           <Button type="button" icon="pi pi-search"className="p-button-success" style={{marginRight: '.5em'}}></Button>
         </Link>
           
@@ -49,11 +62,10 @@ export default function HistoricoExame (){
               </center>
               <br/>
             <div>
-              <DataTable ref={dt} value={exame} paginator={true} rows={10} header={header}
-                globalFilter={globalFilter} emptyMessage="Nenhum exame encontrad">
-                  <Column field="id_exame" header="ID" sortable filter={true} filterPlaceholder="ID do exame" style={{textAlign:'center', width: '6em'}}/>
-                  <Column field="nome_exame" header="Nome" sortable filter={true} filterPlaceholder="Nome do exame"/>
-                  <Column field="data_criacao" header="Data" sortable filter={true} filterPlaceholder="Data do exame"/>
+              <DataTable ref={dt} value={exame} paginator={true} rows={10} header={header} globalFilter={globalFilter} emptyMessage="Nenhum exame encontrado">
+                  <Column field="id" header="ID" sortable filter={true} filterPlaceholder="ID do exame" style={{textAlign:'center', width: '6em'}}/>
+                  <Column field="name" header="Nome" sortable filter={true} filterPlaceholder="Nome do exame"/>
+                  <Column field="creation_date" header="Data" sortable filter={true} filterPlaceholder="Data do exame"/>
                   <Column header="+" body={visualizarExame} style={{textAlign:'center', width: '4em'}}/>
               </DataTable>
             </div>
