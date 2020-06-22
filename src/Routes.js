@@ -37,18 +37,9 @@ class Routes extends Component{
 
   componentDidMount(){
     firebase.isInitialized().then(resultado => {
-        ServicePaciente.getPaciente().then(response => {
-          response.json().then(data => {
-            localStorage.setItem('userId', data.data.id);
-          }).catch((erro) => {
-            console.log(erro);
-          })
-        })
-        .catch((erro) => {
-          console.log(erro);
-        });
-      if(resultado == null) resultado = false;
-      else {
+      if(resultado == null){
+        resultado = false;
+      } else {
         ServicePaciente.getPaciente().then(response => {
           response.json().then(data => {
             localStorage.setItem('userId', data.data.id);
