@@ -29,8 +29,11 @@ class Firebase{
   }
 
   logout(){
-    localStorage.removeItem('refreshToken');
+    /*localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('tokenAccess');
+    localStorage.removeItem('access');*/
+    //localStorage.removeItem('userId');
     return app.auth().signOut();
   }
 

@@ -27,6 +27,7 @@ import GenerateToken from './pages/generate_token';
 import GenerateQrCode from './pages/generate_token/generateQrCode';
 import getToken from './pages/getToken';
 import Loading from './pages/loading';
+import ServicePaciente from './services/paciente/ServicePaciente';
 
 class Routes extends Component{
 
@@ -36,14 +37,51 @@ class Routes extends Component{
 
   componentDidMount(){
     firebase.isInitialized().then(resultado => {
+        ServicePaciente.getPaciente().then(response => {
+          response.json().then(data => {
+            localStorage.setItem('userId', data.data.id);
+          }).catch((erro) => {
+            console.log(erro);
+          })
+        })
+        .catch((erro) => {
+          console.log(erro);
+        });
       if(resultado == null) resultado = false;
+      else {
+        ServicePaciente.getPaciente().then(response => {
+          response.json().then(data => {
+            localStorage.setItem('userId', data.data.id);
+          }).catch((erro) => {
+            console.log(erro);
+          })
+        })
+        .catch((erro) => {
+          console.log(erro);
+        });
+      }
       // Devolve o usuario
       this.setState({firebaseInitialized: resultado});
     })
   }
 
   render(){
-    return this.state.firebaseInitialized !== false ? (
+    return this.state.firebaseInitialized === false ? (
+      <BrowserRouter>
+        <HeaderSemLogar/>
+        {this.state.firebaseInitialized == null ?
+          <Loading/>
+          : 
+          <Switch>
+            <Route exact path="/cadastro" component={Cadastrar}/>
+            <Route exact path="/" component={Logar}/>
+            <Route exact path="/getToken/:token" component={getToken}/>
+            <Route path="*" component={Logar}/>
+          </Switch>
+        }
+        <Footer/>
+      </BrowserRouter>
+    ) : (
       <BrowserRouter>
         <Header/>
         {this.state.firebaseInitialized == null ?
@@ -95,21 +133,6 @@ class Routes extends Component{
         }
         <Footer/>
       </BrowserRouter>
-    ) : (
-          <BrowserRouter>
-          <HeaderSemLogar/>
-          {this.state.firebaseInitialized == null ?
-            <Loading/>
-            : 
-            <Switch>
-              <Route exact path="/cadastro" component={Cadastrar}/>
-              <Route exact path="/" component={Logar}/>
-              <Route exact path="/getToken/:token" component={getToken}/>
-              <Route path="*" component={Logar}/>
-            </Switch>
-          }
-          <Footer/>
-          </BrowserRouter>
     );
   }
 }

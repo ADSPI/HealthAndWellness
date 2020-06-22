@@ -59,15 +59,15 @@ export default function MenuBar() {
       command:(e)=> handleOnClick(e)
    },
    {
-      label:'Perfil',
-      icon:'pi pi-fw pi-user',
-      path:"/perfil",
-      command:(e)=> handleOnClick(e)
-   },
-   {
       label:'Gerar token',
       icon:'pi pi-fw pi-share-alt',
       path:"/generateToken",
+      command:(e)=> handleOnClick(e)
+   },
+   {
+      label:'Perfil',
+      icon:'pi pi-fw pi-user',
+      path:"/perfil",
       command:(e)=> handleOnClick(e)
    },
  ]

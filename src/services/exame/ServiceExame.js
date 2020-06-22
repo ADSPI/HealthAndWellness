@@ -1,37 +1,31 @@
 import { API } from './../../config/api';
 import firebase from './../../config/fireConnection';
 import exame from './../dados_mockados/exame';
+import { getAllByPlaceholderText } from '@testing-library/react';
 
 class ServiceExame{
 
-    insertExame(doc){
-        let uid = firebase.getUID();
-        const uploadTasks = firebase.storage.ref(`exames/${uid}/${doc.name}`).put(doc);
-        return "url";
-        /*await uploadTasks.on('state_changed',
-        (snapshot)=> {
-            //progress
-        },
-        (error) => {
-            //Error
-            console.log('Error imagem' + error);
-        },
-        () => {
-            //sucess
-        })*/
-        //firebase.storage
-        /*var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
+    insertExame(data){
+        if(data.appointment === '') data.appointment = null;
+        var exam = {
+            file_path : data.url,
+            creation_date : data.data_exame,
+            name : data.nome_exame,
+            patient : localStorage.getItem('userId'),
+            appointment : null,
+        }
 
-        return fetch(API.SERVICE_BACKEND.INSERE_EXAME, {
+        console.log(exam);
+
+        return fetch('https://api-health-wellness.herokuapp.com/hw/exam', {
             method: 'POST',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
-        });*/
+            body: JSON.stringify(exam),
+        });
     };
 
     atualizaExame(data){
