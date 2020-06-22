@@ -39,8 +39,6 @@ class ServiceExame{
 
         let id = data.id;
 
-        console.log(exam);
-
         return fetch(`${'https://api-health-wellness.herokuapp.com/hw/exam/' + id}`, {
             method: 'PUT',
             headers: {

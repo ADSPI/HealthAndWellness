@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {Button} from 'primereact/button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -9,23 +9,23 @@ import Loading from '../loading';
 import {Link} from 'react-router-dom';
 import firebase from './../../config/fireConnection';
 import {Calendar} from 'primereact/calendar';
+import {Messages} from 'primereact/messages';
 
 //SERVICE
 import ServiceExame from './../../services/exame/ServiceExame';
-
 import './../../css/css_general.css';
 
 export default function NovoExame() {
+  let messages = useRef(null);
 
   const { register, handleSubmit, errors } = useForm();
   const [stateEdit, setStateEdit] = useState(true);
   const [exame, setExame] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [exameDoc, setExameDoc] = useState(null);
   const [dataExame, setDataExame] = useState(null);
   const [urlExame, setUrlExame] = useState('');
   const [progress, setProgress] = useState(0);
-  const [stateInsert, setStateInsert] = useState(true);
+  const [stateInsert, setStateInsert] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -36,7 +36,7 @@ export default function NovoExame() {
     .catch((erro) => {
       console.log(erro);
     });
-    //setExame(ServiceExame.getExameMockado(idExame));
+
     window.setTimeout(function() {
       setLoading(false);
     }, 1500);
@@ -60,30 +60,70 @@ export default function NovoExame() {
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
     day = ("0" + date.getDate()).slice(-2);
     setDataExame([day, mnth, date.getFullYear()].join("/"));
+    exame.creation_date = date;
+    setExame(exame);
+  }
+
+  const getExameUpdated = () => {
+    var url = window.location.pathname;
+    var idExame = url.split("/")[2];
+
+    ServiceExame.getExame(idExame).then(response => getExame(response))
+    .catch((erro) => {
+      console.log(erro);
+    });
   }
 
   const onSubmit = data => {
+    setLoading(true);
     data.creation_date = dataExame;
     data.url = exame.file_path;
     data.id = exame.id;
-    ServiceExame.atualizaExame(data);
+    ServiceExame.atualizaExame(data).then(response => {
+      if(response.status === 200){
+        showSuccess();
+        getExameUpdated();
+      } else {
+        showFailMessage();
+      }      
+    })
+    .catch((erro) => {
+      console.log(erro);
+      
+    });
+
+    window.setTimeout(function() {
+      setLoading(false);
+    }, 1500);
   }
 
-  const changeStateEdit = (state) => {
-    setStateEdit(state);
-  }
+  const showSuccess = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'success', summary: 'Exame atualizado com sucesso'});
+  };
+
+  const showFailMessage = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'error', summary: 'Ops, algo inesperado aconteceu'});
+  };
+
+  const errorTypeFile = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'error', summary: 'Ops, Anexe um arquivo do tipo PNG ou JPG'});
+  };
 
   const handleFile = async (e) => {
+    setStateInsert(true);
     if(e.target.files[0]){
       const doc = e.target.files[0];
       if(doc.type === 'image/png' || doc.type === 'image/jpeg' || doc.type === 'image/jpg'){
         insertExame(doc).then(retorno =>{
-          
+          setUrlExame('');
         })
       } else {
-        alert('Anexe um arquivo do tipo PNG ou JPG');
-        setExameDoc(null);
-        setStateInsert(true);
+        //alert('Anexe um arquivo do tipo PNG ou JPG');
+        errorTypeFile();
+        setStateInsert(false);
         return null;
       }
     }
@@ -105,7 +145,6 @@ export default function NovoExame() {
     },
     () => {
       //sucess
-      setExameDoc(doc);
       firebase.storage.ref(`exames/${uid}`)
       .child(doc.name).getDownloadURL()
       .then(url => {
@@ -114,7 +153,6 @@ export default function NovoExame() {
         setUrlExame(url);
         setStateInsert(false);
       })
-
     })
   };
 
@@ -122,15 +160,10 @@ export default function NovoExame() {
     exame.name = value;
     setExame(exame);
   }
-
-  const updateIdConsulta = (value) => {
-    exame.appointment = value;
-    setExame(exame);
-  }
-
     return (
             <div>
               <Container>
+              <Messages ref={messages} />
                 {loading ?
                 <Loading/> :
               <div>
@@ -138,6 +171,7 @@ export default function NovoExame() {
                 <center>
                   <h2>Cadastrar novo exame</h2>
                 </center>
+                
                 <br/>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Row className="justify-content-md-center">
@@ -157,7 +191,8 @@ export default function NovoExame() {
                       {errors.nome_exame && errors.nome_exame.type === "required" && <span className="alertField">Campo nome exame é obrigatório</span>}
                       {errors.nome_exame && errors.nome_exame.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
                     </Col>
-                    <Col lg={4} md={10}>
+                    {/*
+                      <Col lg={4} md={10}>
                       <br/>
                       <Form.Label>ID consulta</Form.Label>
                       <Form.Control
@@ -172,8 +207,27 @@ export default function NovoExame() {
                       />
                       {errors.id_consulta && errors.id_consulta.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
                     </Col>
-                  </Row>
-                  <Row className="justify-content-md-center">
+                    */}
+                    <Col lg={4} md={10}>
+                      <br/>
+                      <Form.Label className="required">Exame</Form.Label><br/>
+                      <input 
+                      type="file"
+                      onChange={(e) => handleFile(e)}
+                      disabled={stateEdit}
+                      />
+                      <br/><br/>
+                      {urlExame !== '' ?
+                      <center>
+                        <img src={exame.file_path} width="250" height="150" alt="Imagem exame"/>
+                      </center>
+                          :
+                          <div>
+                            <progress value={progress} max="100"/>
+                          </div>
+                        
+                      }
+                    </Col>
                     <Col lg={4} md={10}>
                       <br/>
                       <Form.Label>Data exame</Form.Label><br/>
@@ -188,20 +242,6 @@ export default function NovoExame() {
                         disabled={stateEdit}
                       />
                       <br/>
-                    </Col>
-                    <Col lg={4} md={10}>
-                      <br/>
-                      <Form.Label className="required">Exame</Form.Label><br/>
-                      <input 
-                      type="file"
-                      onChange={(e) => handleFile(e)}
-                      disabled={stateEdit}
-                      />
-                      {urlExame !== '' ?
-                        <img src={exame.file_path} width="250" height="150" alt="Imagem exame"/>
-                          :
-                        <progress value={progress} max="100"/>
-                      }
                     </Col>
                   </Row>
                   {stateEdit ?
@@ -218,13 +258,22 @@ export default function NovoExame() {
                       <Col>
                         <br/><br/><br/>
                         <center>
-                          <Button label="Cancelar" onClick={() => setStateEdit(true)} className="p-button-secondary" />
+                          <Link to="/historicoExame">
+                            <Button label="Cancelar" className="p-button-secondary"/>
+                          </Link>
                         </center>
                       </Col>
                       <Col>
                         <br/><br/><br/>
                         <center>
-                          <Button label="Atualizar" className="p-button-danger" title="Submit" onPress={handleSubmit(onSubmit)} type="submit"/>
+                          <Button
+                            label="Atualizar" 
+                            className="p-button-danger"
+                            title="Submit"
+                            onPress={handleSubmit(onSubmit)}
+                            type="submit"
+                            disabled={stateInsert}
+                          />
                         </center>
                         </Col>
                     </Row>

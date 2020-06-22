@@ -125,27 +125,31 @@ export default function NovoExame() {
                     </Col>
                     <Col lg={4} md={10}>
                       <br/>
-                      <Form.Label>Data exame</Form.Label><br/>
-                      <Calendar onChange={(e) => convertDate(e.target.value)} dateFormat="dd/mm/yy"
-                      monthNavigator={true} yearNavigator={true} yearRange="1900:2020" placeholder="dd/mm/aaaa"/>
-                      <br/>
-                    </Col>
-                  </Row>
-                  <Row className="justify-content-md-center">
-                    <Col lg={4} md={10}>
-                      <br/>
                       <Form.Label className="required">Exame</Form.Label><br/>
                       <input 
                       type="file"
                       onChange={(e) => handleFile(e)}
                       />
+                      <br/><br/>
                       {urlExame !== '' ?
+                      <center>
                         <img src={urlExame} width="250" height="150" alt="Imagem exame"/>
+                      </center>
                           :
-                        <progress value={progress} max="100"/>
+                        <div>
+                          <progress value={progress} max="100"/>
+                        </div>
                       }
                     </Col>
                     <Col lg={4} md={10}>
+                      <br/>
+                      <Form.Label>Data exame</Form.Label><br/>
+                      <Calendar onChange={(e) => convertDate(e.target.value)} dateFormat="dd/mm/yy"
+                      monthNavigator={true} yearNavigator={true} yearRange="1900:2020" placeholder="dd/mm/aaaa"/>
+                      <br/>
+                    </Col>
+                    {/*
+                      <Col lg={4} md={10}>
                       <br/>
                       <Form.Label>ID da consulta</Form.Label>
                       <Form.Control
@@ -157,6 +161,7 @@ export default function NovoExame() {
                       />
                       {errors.appointment && errors.appointment.type === "maxLength" && <span className="alertField">O tamanho máximo é de 4 caracteres</span> }
                     </Col>
+                    */}
                   </Row>
                   <Row lg={6} className="justify-content-md-center">
                     <Col>
