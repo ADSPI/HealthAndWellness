@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {Button} from 'primereact/button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -8,13 +8,14 @@ import useForm from "react-hook-form";
 import ServiceExame from './../../services/exame/ServiceExame';
 import {Calendar} from 'primereact/calendar';
 import firebase from './../../config/fireConnection';
+import {Messages} from 'primereact/messages';
 
 import './../../css/css_general.css';
 
 export default function NovoExame() {
+  let messages = useRef(null);
 
   const { register, handleSubmit, errors } = useForm();
-  const [exameDoc, setExameDoc] = useState(null);
   const [dataExame, setDataExame] = useState(null);
   const [urlExame, setUrlExame] = useState('');
   const [progress, setProgress] = useState(0);
@@ -24,9 +25,12 @@ export default function NovoExame() {
     data.data_exame = dataExame;
     data.url = urlExame;
     ServiceExame.insertExame(data).then(retorno => {
-      alert("Exame cadastrado com sucesso!");
+      showSuccess();
+      setStateInsert(false);
+      //alert("Exame cadastrado com sucesso!");
     }).catch(error => {
       console.log(error);
+      showError(error);
     });
   }
 
@@ -38,13 +42,27 @@ export default function NovoExame() {
           
         })
       } else {
-        alert('Anexe um arquivo do tipo PNG ou JPG');
-        setExameDoc(null);
+        errorTypeFile();
         setStateInsert(true);
         return null;
       }
     }
   }
+
+  const showSuccess = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'success', summary: 'Exame atualizado com sucesso'});
+  };
+
+  const showError = (error) => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'error', summary: 'Ops, algo inesperado aconteceu', detail: error});
+  };
+
+  const errorTypeFile = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'error', summary: 'Ops, Anexe um arquivo do tipo PNG ou JPG'});
+  };
 
   const convertDate = (str) => {
     var date = new Date(str),
@@ -69,7 +87,6 @@ export default function NovoExame() {
     },
     () => {
       //sucess
-      setExameDoc(doc);
       firebase.storage.ref(`exames/${uid}`)
       .child(doc.name).getDownloadURL()
       .then(url => {
@@ -88,6 +105,8 @@ export default function NovoExame() {
                 <center>
                   <h2>Cadastrar novo exame</h2>
                 </center>
+                <br/>
+                <Messages ref={messages} />
                 <br/>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Row className="justify-content-md-center">
@@ -128,7 +147,7 @@ export default function NovoExame() {
                     </Col>
                     <Col lg={4} md={10}>
                       <br/>
-                      <Form.Label className="required">ID da consulta</Form.Label>
+                      <Form.Label>ID da consulta</Form.Label>
                       <Form.Control
                         type="number"
                         name="appointment"

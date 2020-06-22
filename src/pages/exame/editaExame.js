@@ -26,14 +26,12 @@ export default function NovoExame() {
   const [urlExame, setUrlExame] = useState('');
   const [progress, setProgress] = useState(0);
   const [stateInsert, setStateInsert] = useState(true);
-  //const[dataExame, setDataExame] = useState();
 
   useEffect(() => {
     setLoading(true);
 
     var url = window.location.pathname;
     var idExame = url.split("/")[2];
-    console.log(ServiceExame.getExameMockado(idExame));
     ServiceExame.getExame(idExame).then(response => getExame(response))
     .catch((erro) => {
       console.log(erro);
@@ -66,7 +64,9 @@ export default function NovoExame() {
 
   const onSubmit = data => {
     data.creation_date = dataExame;
-    console.log(data);
+    data.url = exame.file_path;
+    data.id = exame.id;
+    ServiceExame.atualizaExame(data);
   }
 
   const changeStateEdit = (state) => {
@@ -109,6 +109,8 @@ export default function NovoExame() {
       firebase.storage.ref(`exames/${uid}`)
       .child(doc.name).getDownloadURL()
       .then(url => {
+        exame.file_path = url;
+        setExame(exame);
         setUrlExame(url);
         setStateInsert(false);
       })

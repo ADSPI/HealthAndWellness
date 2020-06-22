@@ -1,5 +1,4 @@
-import { API } from './../../config/api';
-import firebase from './../../config/fireConnection';
+
 import exame from './../dados_mockados/exame';
 
 class ServiceExame{
@@ -28,17 +27,28 @@ class ServiceExame{
     };
 
     atualizaExame(data){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
-        
-        return fetch(API.SERVICE_BACKEND.ATUALIZA_EXAME, {
+        //if(data.appointment === '') data.appointment = null;
+        var exam = {
+            file_path : data.url,
+            creation_date : data.creation_date,
+            name : data.name,
+            patient : localStorage.getItem('userId'),
+            appointment : null,
+            id : data.id,
+        }
+
+        let id = data.id;
+
+        console.log(exam);
+
+        return fetch(`${'https://api-health-wellness.herokuapp.com/hw/exam/' + id}`, {
             method: 'PUT',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(exam),
         });
     };
     

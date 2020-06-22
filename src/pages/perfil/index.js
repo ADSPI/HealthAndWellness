@@ -110,8 +110,9 @@ export default function Perfil() {
         <Loading/> :
         <div>
           <br/>
+          <center><h2>Seu perfil de usuário</h2></center><br/>
           <Messages ref={messages} />
-          <center><h2>Seu perfil de usuário</h2></center><br/><br/>
+          <br/>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row className="justify-content-md-center">
               <Col lg={5} md={10}><br/>

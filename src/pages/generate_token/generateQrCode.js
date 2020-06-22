@@ -16,7 +16,7 @@ function GenerateQrCode() {
       level: 'M',
       margin: 2,
       scale: 1,
-      width: 400,
+      width: 340,
       color: {
         dark: '#000000',
         light: '#DCDCDC',

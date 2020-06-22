@@ -3,8 +3,6 @@ class ImcService {
     calculaImc(data) {
         let peso = data.peso;
         let altura = data.altura;
-        console.log(data);
-        console.log(altura);
 
     //A equação é o valor do peso em quilogramas dividido pela 
     //altura em centímetros. Em seguida, é preciso dividir o 

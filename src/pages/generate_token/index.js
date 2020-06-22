@@ -42,8 +42,8 @@ export default function GenerateToken() {
           <center><h2>Geração de token para consulta</h2></center><br/><br/>
           <Row>
             <h2>Como funciona o token?</h2>
-            <p>Ao gerar o token será disponibilizado um QRToken e uma URL para que assim 
-              o seu médico possa visualizar seu histórico de consultas e
+            <p>Ao gerar o token será disponibilizado um QRCode e uma URL para que assim 
+              o seu médico escolha a melhor forma de visualizar seu histórico de consultas e
               exames. O token gerado terá uma duração de 60 minutos de disponibilidade de acesso.
             </p>
           </Row>
