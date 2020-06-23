@@ -6,12 +6,14 @@ export default function Home() {
 
   return (
     <div>
+      <br/>
         <center>
-        <h2>Seja bem-vindo</h2>
-        <h1>Quem somos</h1>
+        <h2>Seja bem-vindo ao <b>Health and Wellness</b></h2>
         </center>
-        <img src={logo} alt="Logo da Health and Wellness" style={{width:'30%'}}/>
-        Seja bem-vindo ao Health and Wellness, não repare a bagunça, ainda estamos em estágio embrionário!
+        <br/>
+        <center>
+          <img src={logo} alt="Logo da Health and Wellness" style={{width:'50%'}}/>
+        </center>
     </div>
   );
 }
