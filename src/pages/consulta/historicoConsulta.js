@@ -18,8 +18,21 @@ export default function HistoricoConsulta (){
 
     useEffect(() => {
       setLoading(true);
-      setConsulta(ServiceConsulta.listaConsultaMockado());
-      setLoading(false);
+      ServiceConsulta.listaConsulta().then(response => {
+        response.json().then(data => {
+          setConsulta(data.data);
+        }).catch((erro) => {
+          console.log(erro);
+        })
+      })
+      .catch((erro) => {
+        console.log(erro);
+      });
+
+      window.setTimeout(function() {
+        setLoading(false);
+    }, 1500);
+
     }, []);
 
     const header = (
@@ -31,7 +44,7 @@ export default function HistoricoConsulta (){
 
     const visualizarConsulta = (rowData, column) => {
       return <div>
-        <Link to={'/consulta/' + rowData.id_consulta}>
+        <Link to={'/consulta/' + rowData.id}>
           <Button type="button" icon="pi pi-search"className="p-button-success" style={{marginRight: '.5em'}}></Button>
         </Link>
           
@@ -51,9 +64,9 @@ export default function HistoricoConsulta (){
             <div>
               <DataTable ref={dt} value={consulta} paginator={true} rows={10} header={header}
                 globalFilter={globalFilter} emptyMessage="Nenhuma consulta encontrada">
-                  <Column field="id_consulta" header="ID" sortable filter={true} filterPlaceholder="ID da consulta" style={{textAlign:'center', width: '6em'}}/>
-                  <Column field="titulo" header="Título" sortable filter={true} filterPlaceholder="Título da consulta"/>
-                  <Column field="data" header="Data" sortable filter={true} filterPlaceholder="Data da consulta"/>
+                  <Column field="id" header="ID" sortable filter={true} filterPlaceholder="ID da consulta" style={{textAlign:'center', width: '6em'}}/>
+                  <Column field="title" header="Título" sortable filter={true} filterPlaceholder="Título da consulta"/>
+                  <Column field="date" header="Data" sortable filter={true} filterPlaceholder="Data da consulta"/>
                   <Column header="+" body={visualizarConsulta} style={{textAlign:'center', width: '4em'}}/>
               </DataTable>
             </div>
