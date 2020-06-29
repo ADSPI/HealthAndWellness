@@ -27,6 +27,9 @@ O uso do sistema é simples, quando o paciente comparecer em alguma consulta mé
 # MER da arquitetura do banco de dados
 ![modelo_mer](https://user-images.githubusercontent.com/62190930/86065589-58e37480-ba46-11ea-91d9-b19f1ae5f2cd.PNG)
 
+# Tela inicial
+![pagina_inicial](https://user-images.githubusercontent.com/62190930/86066257-10c55180-ba48-11ea-8cfe-8021a3e15c9c.PNG)
+
 # How to Run
 - Baixe o branch master em sua máquina
 - Para instalar todas as libs do projeto, execute o seguinte comando no diretório main:
