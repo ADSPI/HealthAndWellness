@@ -15,6 +15,12 @@ https://client-health-wellness.herokuapp.com/
 # Health And Wellness
 Client application do sistema HealthAndWellness, aplicação desenvolvida em React JS que realiza API com server application dedicado.
 
+# Propósito
+O Health and Wellness é um sistema de controle de prontuário pessoal, no qual busca dar a oportunidade de carregar consigo mesmo todo seu histórico de consulta e exame, trazendo a comodidade e liberdade de migrar de hospitais/médicos levando todos seus antecedentes de saúde.
+
+# Como funciona?
+O uso do sistema é simples, quando o paciente comparecer em alguma consulta médica, basta ele gerar e conceder um token de acesso ao médico da consulta, o médico por si só poderá visualizar o histórico de saúde do paciente, informações como exames salvos e consultas registradas estarão de fácil acesso, o médico também poderá inserir dados relacionados aos atuais sintomas, diagnósticos e medicações referente a análise feita em você.
+
 # Arquitetura do Sistema
 ![arquitetura_sistema](https://user-images.githubusercontent.com/62190930/86065523-33566b00-ba46-11ea-9d48-53eb30fb76b2.png)
 
