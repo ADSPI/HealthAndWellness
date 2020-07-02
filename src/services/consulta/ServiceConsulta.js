@@ -1,62 +1,70 @@
-import { API } from './../../config/api';
-import firebase from './../../config/fireConnection';
 import dadosConsulta from './../dados_mockados/historicoConsulta';
 
 class ServiceConsulta{
 
     insertConsulta(data){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
+        var appointment = {
+            title : data.title,
+            date : data.date,
+            symptom : data.symptom,
+            diagnosis : data.diagnosis,
+            medication : data.medication,
+            patient : localStorage.getItem('userId'),
+            //doctor : data.doctor,
+            doctor : Number(data.doctor),
+        }
 
-        return fetch(API.SERVICE_BACKEND.INSERE_CONSULTA, {
+        return fetch('https://api-health-wellness.herokuapp.com/hw/appointment', {
             method: 'POST',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
-          });
+            body: JSON.stringify(appointment),
+        });
     };
 
     atualizaConsulta(data){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
+        var appointment = {
+            id : data.id,
+            title : data.title,
+            date : data.date,
+            symptom : data.symptom,
+            diagnosis : data.diagnosis,
+            medication : data.medication,
+            patient : localStorage.getItem('userId'),
+            doctor : data.doctor.crm,
+        }
         
-        return fetch(API.SERVICE_BACKEND.ATUALIZA_CONSULTA, {
+        return fetch(`${'https://api-health-wellness.herokuapp.com/hw/appointment/' + appointment.id}`, {
             method: 'PUT',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(appointment),
         });
     };
 
     listaConsulta(){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
-
-        return fetch(API.SERVICE_BACKEND.LISTA_CONSULTA, {
+        return fetch('https://api-health-wellness.herokuapp.com/hw/appointment', {
             method: 'GET',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             }
         });
     }
 
-    buscaConsulta(id_consulta){
-        var refreshToken = firebase.getRefreshToken();
-        var accessToken = firebase.getAccessToken();
-        
-        return fetch(`${API.SERVICE_BACKEND.BUSCA_CONSULTA + id_consulta}` , {
+    getConsulta(id_consulta){
+        return fetch(`${'https://api-health-wellness.herokuapp.com/hw/appointment/' + id_consulta}`, {
             method: 'GET',
             headers: {
-              'refreshToken': refreshToken,
-              'accessToken': accessToken,
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
               'Content-Type': 'application/json'
             }
         });

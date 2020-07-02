@@ -51,7 +51,7 @@ export default function NovoExame() {
 
   const showSuccess = () => {
     window.scrollTo(0, 0);
-    messages.current.show({severity: 'success', summary: 'Exame atualizado com sucesso'});
+    messages.current.show({severity: 'success', summary: 'Exame criado com sucesso'});
   };
 
   const showError = (error) => {

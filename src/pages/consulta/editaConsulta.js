@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useForm from "react-hook-form";
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import {Button} from 'primereact/button';
-import {Dropdown} from "primereact/dropdown";
 import Loading from '../loading';
 import {Link} from 'react-router-dom';
+import {Messages} from 'primereact/messages';
 
 //SERVICE
 import ServiceConsulta from './../../services/consulta/ServiceConsulta';
@@ -15,55 +15,106 @@ import ServiceConsulta from './../../services/consulta/ServiceConsulta';
 import './../../css/css_general.css';
 
 export default function EditaConsulta (){
-  
+  let messages = useRef(null);
+
   const { register, handleSubmit, errors } = useForm();
-  const [idMedico, setIdMedico] = useState("Informe seu CRM");
   const [loading, setLoading] = useState(false);
   const [consulta, setConsulta] = useState([]);
+  const [medico, setMedico] = useState([]);
   const [stateEdit, setStateEdit] = useState(true);
-
-  let medicos = [
-    {label: '111111', value: '111111'},
-    {label: '222222', value: '222222'},
-    {label: '333333', value: '333333'},
-    {label: '444444', value: '444444'},
-    {label: '555555', value: '555555'},
-    {label: '666666', value: '666666'},
-    {label: '777777', value: '777777'},
-    {label: '888888', value: '888888'},
-    {label: '999999', value: '999999'}
-  ];
 
   useEffect(() => {
     setLoading(true);
 
     var url = window.location.pathname;
     var idConsulta = url.split("/")[2];
-   
-    setConsulta(ServiceConsulta.getConsultaMockado(idConsulta));
-    setLoading(false);
+    ServiceConsulta.getConsulta(idConsulta)
+    .then(response => getConsulta(response))
+    .catch((erro) => {
+      console.log(erro);
+    });
+
+    window.setTimeout(function() {
+      setLoading(false);
+    }, 1500);
   }, []);
 
+  const getConsultaUpdated = () => {
+    var url = window.location.pathname;
+    var idExame = url.split("/")[2];
+
+    ServiceConsulta.getConsulta(idExame)
+    .then(response => getConsulta(response))
+    .catch((erro) => {
+      console.log(erro);
+    });
+  }
+
+  const getConsulta = (response) => {
+    response.json().then(data => {
+      setConsulta(data.data);
+      setMedico(data.data.doctor);
+    }).catch((erro) => {
+      console.log(erro);
+    });
+  }
+
   const onSubmit = data => {
-      
-      data.id_medico = idMedico;
-      ServiceConsulta.atualizaConsulta(data);
+    setLoading(true);
+    data.id = consulta.id;
+    data.doctor = medico;
+    data.date = consulta.date;
+    ServiceConsulta.atualizaConsulta(data).then(response => {
+      if(response.status === 200){
+        showSuccess();
+        getConsultaUpdated();
+      } else {
+        showFailMessage();
+      }      
+    })
+    .catch((erro) => {
+      console.log(erro);
+    });
+
+    window.setTimeout(function() {
+      setLoading(false);
+    }, 1500);
   }
 
-  const setCRMMedico = (e) => {
-      consulta.nome_med = 'Nome será atualizado conforme CRM';
-      setConsulta(consulta);
-      setIdMedico(e.value);
-  }
+  const showSuccess = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'success', summary: 'Consulta atualizada com sucesso'});
+  };
 
-  const changeStateEdit = (state) => {
-    setIdMedico(consulta.id_medico);
-    setStateEdit(state);
-  }
+  const showFailMessage = () => {
+    window.scrollTo(0, 0);
+    messages.current.show({severity: 'error', summary: 'Ops, algo inesperado aconteceu'});
+  };
+
+  const updateTitle = (value) => {
+    consulta.name = value;
+    setConsulta(consulta);
+  };
+
+  const updateSymptom = (value) => {
+    consulta.symptom = value;
+    setConsulta(consulta);
+  };
+
+  const updateDiagnosis = (value) => {
+    consulta.diagnosis = value;
+    setConsulta(consulta);
+  };
+
+  const updateMedication = (value) => {
+    consulta.medication = value;
+    setConsulta(consulta);
+  };
 
   return (
     <div>
       <Container>
+      <Messages ref={messages} />
         {loading ?
           <Loading/> :
           <div>
@@ -76,29 +127,13 @@ export default function EditaConsulta (){
             <Row className="justify-content-md-center">
               <Col lg={4} md={12}>
                 <br/>
-                <Form.Label>CRM do Médico</Form.Label><br/>
-                <Dropdown
-                  options={medicos}
-                  name="id_medico"
-                  onChange={setCRMMedico}
-                  style={{width: '20em'}}
-                  value={stateEdit ? consulta.id_medico : idMedico}
-                  filter={true}
-                  filterPlaceholder="CRM médico"
-                  filterBy="label,value"
-                  showClear={true}
-                  disabled={stateEdit}
-                />
-              </Col>
-              <Col lg={4} md={10}>
-                <br/>
                 <Form.Label>Nome médico</Form.Label>
                 <Form.Control
                   type="text"
                   name="nome_med"
                   maxLength="50"
                   ref={register({required:true, maxLength: 50})}
-                  defaultValue={consulta.nome_med}
+                  defaultValue={medico.name}
                   disabled={true}
                   placeholder="Insira aqui seu nome completo"
                 />
@@ -110,12 +145,13 @@ export default function EditaConsulta (){
                 <Form.Label className="required">Título da consulta</Form.Label>
                 <Form.Control
                 type="text"
-                name="titulo"
+                name="title"
                 maxLength="50"
                 ref={register({required:true, maxLength: 50})}
                 placeholder="Insira aqui o título da consulta"
-                defaultValue={consulta.titulo}
-                disabled={stateEdit}                
+                defaultValue={consulta.title}
+                disabled={stateEdit}
+                onChange={(e) => updateTitle(e.target.value)}               
                 />
                 {errors.titulo && errors.titulo.type === "required" && <span className="alertField">Campo título é obrigatório</span>}
                 {errors.titulo && errors.titulo.type === "maxLength" && <span className="alertField">O tamanho máximo é de 50 caracteres</span> }
@@ -130,10 +166,11 @@ export default function EditaConsulta (){
                   cols="30"
                   placeholder="Insira aqui os sintomas"
                   maxLength="240"
-                  name="sintoma"
+                  name="symptom"
                   ref={register({required:true, maxLength: 240})}
-                  defaultValue={consulta.sintoma}
+                  defaultValue={consulta.symptom}
                   disabled={stateEdit}
+                  onChange={(e) => updateSymptom(e.target.value)}
                 />
                 {errors.sintoma && errors.sintoma.type === "required" && <span className="alertField">Campo sintomas é obrigatório</span>}
                 {errors.sintoma && errors.sintoma.type === "maxLength" && <span className="alertField">O tamanho máximo é de 240 caracteres</span> }
@@ -146,10 +183,11 @@ export default function EditaConsulta (){
                   cols="30"
                   placeholder="Insira aqui o diagnóstico"
                   maxLength="240"
-                  name="diagnostico"
+                  name="diagnosis"
                   ref={register({maxLength: 240})}
-                  defaultValue={consulta.diagnostico}
+                  defaultValue={consulta.diagnosis}
                   disabled={stateEdit}
+                  onChange={(e) => updateDiagnosis(e.target.value)}
                 />
               </Col>
               <Col lg={4} md={12}><br/>
@@ -160,31 +198,24 @@ export default function EditaConsulta (){
                   cols="30"
                   placeholder="Insira aqui a medicação"
                   maxLength="240"
-                  name="medicacao"
+                  name="medication"
                   ref={register({maxLength: 240})}
-                  defaultValue={consulta.medicacao}
+                  defaultValue={consulta.medication}
                   disabled={stateEdit}
+                  onChange={(e) => updateMedication(e.target.value)}
                 />
               </Col>
             </Row>
             {stateEdit ?
-            <Row lg={6} className="justify-content-md-center">
-                <Col>
-                <br/><br/><br/>
-                    <center>
-                    <Link to='/historicoConsulta'>
-                        <Button label="Voltar" className="p-button-secondary"/>
-                    </Link>
-                    </center>
+              <Row>
+                <Col className="justify-content-md-center">
+                  <br/><br/><br/>
+                  <center>
+                    <Link onClick={() => setStateEdit(false)}>Editar consulta</Link>
+                  </center>
                 </Col>
-              <Col className="justify-content-md-center">
-                <br/><br/><br/>
-                <center>
-                  <Button label="Editar" onClick={() => changeStateEdit(false)}  type="" className="p-button-danger"/>
-                </center>
-                <br/><br/><br/>
-              </Col>
-            </Row> :
+              </Row> 
+           :
             <Row lg={6} className="justify-content-md-center">
                 <Col>
                     <br/><br/><br/>
@@ -197,13 +228,17 @@ export default function EditaConsulta (){
                 <Col>
                     <br/><br/><br/>
                     <center>
-                    <Button label="Atualizar" className="p-button-danger" title="Submit" onPress={handleSubmit(onSubmit)} type="submit"/>
+                    <Button
+                      label="Atualizar"
+                      className="p-button-danger"
+                      title="Submit"
+                      type="submit"/>
                     </center>
                 </Col>
             </Row>
             }
           </form>
-          <br/><br/><br/><br/>
+          <br/><br/><br/><br/><br/><br/>
           </div> }
         </Container>
       </div>

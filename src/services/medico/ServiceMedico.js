@@ -1,21 +1,28 @@
-//import { CONFIG } from '../../config/cped';
-import ServiceConsulta from './../consulta/ServiceConsulta';
 
 class ServiceMedico{
 
-    insertMedico(data){
-        let medico = [];
-        medico.crm = data.crm;
-        medico.nome_med = data.nome_med;
-        medico.contato_med = data.contato_med;
-        medico.id_espec = data.id_espec;
-
-        console.log(medico);
-
-        data.id_medico = data.crm;
-        ServiceConsulta.insertConsulta(data);
-        return medico;
+    insertMedico(doctor){
+        return fetch('https://api-health-wellness.herokuapp.com/hw/doctor', {
+            method: 'POST',
+            headers: {
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(doctor),
+        });
     };
+
+    listaMedico(){
+        return fetch('https://api-health-wellness.herokuapp.com/hw/doctor', {
+            method: 'GET',
+            headers: {
+              'refresh-token': localStorage.getItem('refreshToken').toString(),
+              'access-token': localStorage.getItem('accessToken').toString(),
+              'Content-Type': 'application/json'
+            }
+        });
+    }
 }
 
 export default new ServiceMedico();
